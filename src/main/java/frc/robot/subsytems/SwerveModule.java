@@ -18,44 +18,43 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.Constants;
 
-
 public class SwerveModule {
 
-    
-    //add motor model later
+    // add motor model later
 
-    //defines motors for a singular module
+    // defines motors for a singular module
 
     private final CANSparkMax driveMotor;
     private final CANSparkMax turningMotor;
 
-    //add encoder model later
+    // add encoder model later
 
-    //defines encoders for a singular module
+    // defines encoders for a singular module
 
     private final RelativeEncoder driveEncoder;
     private final RelativeEncoder turningEncoder;
     private final CANCoder absoluteEncoder;
 
-    //pid drive controller somehow
-    //add tuning values
+    // pid drive controller somehow
+    // add tuning values
 
-    private final PIDController drivePIDController = new PIDController(.1,0,0);
+    private final PIDController drivePIDController = new PIDController(.1, 0, 0);
 
-    //pid turning trapezoidal
+    // pid turning trapezoidal
 
     private final PIDController turningPIDController = new PIDController(1.0 / (Math.PI / 2), 0, .0);
 
-        //add values later
+    // add values later
 
-    // private final SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(s, v);
+    // private final SimpleMotorFeedforward driveFeedforward = new
+    // SimpleMotorFeedforward(s, v);
     private final SimpleMotorFeedforward turnFeedforward = new SimpleMotorFeedforward(0.13943, 0.39686, 0.015295);
 
     private SparkMaxPIDController pidController;
 
     private final TrapezoidProfile.Constraints turnConstraints = new TrapezoidProfile.Constraints(
             Float.POSITIVE_INFINITY,
-            200*2);
+            200 * 2);
 
     public SwerveModule(
             int driveMotorID,
@@ -65,19 +64,18 @@ public class SwerveModule {
             boolean turningEncoderReversed,
             Rotation2d magnetOffset) {
 
-        //add motor name
-        //makes it so you can define motor channels for the modules in subsystem
+        // add motor name
+        // makes it so you can define motor channels for the modules in subsystem
         driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
         turningMotor = new CANSparkMax(turningMotorID, MotorType.kBrushless);
         turningMotor.restoreFactoryDefaults();
 
-
         driveMotor.setInverted(driveEncoderReversed);
         turningMotor.setInverted(turningEncoderReversed);
 
-        //add encoder name
-        //makes it so you can define encoder channels for the modules in subsystem
-        
+        // add encoder name
+        // makes it so you can define encoder channels for the modules in subsystem
+
         absoluteEncoder = new CANCoder(turningEncoderID);
 
         turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
@@ -113,7 +111,7 @@ public class SwerveModule {
         // #endregion
 
         driveEncoder = driveMotor.getEncoder();
-        //TODO: FIX CONSTANTS
+        // TODO: FIX CONSTANTS
         double positionConversionFactor = Math.PI * Constants.ModuleType.getWheelDiameter()
                 * Constants.ModuleType.getDriveReduction();
         driveEncoder.setPositionConversionFactor(positionConversionFactor);
@@ -124,11 +122,11 @@ public class SwerveModule {
         turningEncoder
                 .setPositionConversionFactor(Math.toRadians(Constants.ModuleConstants.TurningEncoderDegreesPerPulse));
         turningEncoder
-                .setVelocityConversionFactor(Math.toRadians(Constants.ModuleConstants.TurningEncoderDegreesPerPulse) / 60);
+                .setVelocityConversionFactor(
+                        Math.toRadians(Constants.ModuleConstants.TurningEncoderDegreesPerPulse) / 60);
         turningEncoder.setPosition(Math.toRadians(absoluteEncoder.getAbsolutePosition()));
 
         turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
-
 
         pidController = turningMotor.getPIDController();
         pidController.setP(1.0);
@@ -137,43 +135,43 @@ public class SwerveModule {
         // pidController.setFF(1.534);
         // pidController.setOutputRange(-.5, .5);
 
-        // Shuffleboard.getTab("Debug").addDouble("Turn Output Raw", () -> m_turningMotor.get());
-        // Shuffleboard.getTab("Debug").addDouble("Drive Output Raw", () -> m_driveMotor.get());
+        // Shuffleboard.getTab("Debug").addDouble("Turn Output Raw", () ->
+        // m_turningMotor.get());
+        // Shuffleboard.getTab("Debug").addDouble("Drive Output Raw", () ->
+        // m_driveMotor.get());
         Shuffleboard.getTab("Debug")
-                .addDouble("Measured Abs rotation"+turningEncoderID,
+                .addDouble("Measured Abs rotation" + turningEncoderID,
                         () -> Units.degreesToRadians(absoluteEncoder.getAbsolutePosition()));
-        // Shuffleboard.getTab("Debug").addDouble("Integrated encoder", () -> m_integratedTurningEncoder.getPosition());
+        // Shuffleboard.getTab("Debug").addDouble("Integrated encoder", () ->
+        // m_integratedTurningEncoder.getPosition());
     }
 
-        public SwerveModuleState getState() {
-            return new SwerveModuleState(
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(
                 driveEncoder.getVelocity(), new Rotation2d(turningEncoder.getPosition()));
-        }
-
-        public SwerveModulePosition getPosition() {
-            return new SwerveModulePosition(
-                driveEncoder.getPosition(), new Rotation2d(turningEncoder.getPosition()));
-        }
-
-        public void setDesiredState(SwerveModuleState desiredState) {
-            SwerveModuleState state =
-                SwerveModuleState.optimize(desiredState, new Rotation2d(turningEncoder.getPosition()));
-
-            final double driveOutput =
-                drivePIDController.calculate(driveEncoder.getVelocity(), state.speedMetersPerSecond);
-
-            final double turnOutput =
-                turningPIDController.calculate(turningEncoder.getPosition(), state.angle.getRadians());
-
-            //sets the motors to the calculated output
-            driveMotor.set(driveOutput);
-            turningMotor.set(turnOutput);
-        }
-
-        public void resetEncoders() {
-            driveEncoder.setPosition(0);
-            turningEncoder.setPosition(0);
-        }
     }
 
+    public SwerveModulePosition getPosition() {
+        return new SwerveModulePosition(
+                driveEncoder.getPosition(), new Rotation2d(turningEncoder.getPosition()));
+    }
 
+    public void setDesiredState(SwerveModuleState desiredState) {
+        SwerveModuleState state = SwerveModuleState.optimize(desiredState,
+                new Rotation2d(turningEncoder.getPosition()));
+
+        final double driveOutput = drivePIDController.calculate(driveEncoder.getVelocity(), state.speedMetersPerSecond);
+
+        final double turnOutput = turningPIDController.calculate(turningEncoder.getPosition(),
+                state.angle.getRadians());
+
+        // sets the motors to the calculated output
+        driveMotor.set(driveOutput);
+        turningMotor.set(turnOutput);
+    }
+
+    public void resetEncoders() {
+        driveEncoder.setPosition(0);
+        turningEncoder.setPosition(0);
+    }
+}
