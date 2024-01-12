@@ -25,7 +25,11 @@ public class DefaultSwerve extends Command {
 
         // swerve stuff goes here
         //xspeed is xbox controller left joystick yspeed is also left joystick and rotation is right joystick 
-        swerveSub.drive(0, 0, 0, isScheduled());
+        swerveSub.drive(
+            primaryController.getLeftX(), 
+            primaryController.getLeftY(), 
+            primaryController.getRightY(),
+            isScheduled());
     }
 
     @Override
