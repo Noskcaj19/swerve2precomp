@@ -19,10 +19,10 @@ public class SwerveSubsystem extends SubsystemBase {
     private final Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
     private final Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
-    private final SwerveModule fLSwerve = new SwerveModule(0, 0, 0, false, false, Rotation2d.fromRadians(1.5754));
-    private final SwerveModule fRSwerve = new SwerveModule(0, 0, 0, false, false, Rotation2d.fromRadians(-1.2026));
-    private final SwerveModule bLSwerve = new SwerveModule(0, 0, 0, false, false, Rotation2d.fromRadians(-2.6982));
-    private final SwerveModule bRSwerve = new SwerveModule(0, 0, 0, false, false, Rotation2d.fromRadians(2.6952));
+    private final SwerveModule fLSwerve = new SwerveModule(15, 14, 20, false, false, Rotation2d.fromRadians(1.5754));
+    private final SwerveModule fRSwerve = new SwerveModule(13, 12, 19, false, false, Rotation2d.fromRadians(-1.2026));
+    private final SwerveModule bLSwerve = new SwerveModule(17, 16, 21, false, false, Rotation2d.fromRadians(-2.6982));
+    private final SwerveModule bRSwerve = new SwerveModule(11, 10, 18, false, false, Rotation2d.fromRadians(2.6952));
 
     XboxController primaryController = new XboxController(0);
     XboxController secondaryController = new XboxController(0);
