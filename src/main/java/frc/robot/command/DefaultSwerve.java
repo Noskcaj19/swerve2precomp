@@ -23,7 +23,6 @@ public class DefaultSwerve extends Command {
     @Override
     public void execute() {
 
-        // swerve stuff goes here
         // xspeed is xbox controller left joystick yspeed is also left joystick and
         // rotation is right joystick
         swerveSub.drive(primaryController.getLeftX(), primaryController.getLeftY(), primaryController.getRightX(),
