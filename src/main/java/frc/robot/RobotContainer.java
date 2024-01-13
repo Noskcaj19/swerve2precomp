@@ -24,17 +24,13 @@ public class RobotContainer {
 
   // subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
-  private final SwerveModule swerveModule = new SwerveModule(null, null);
-
-  // sds file ???????????????????
-  private final ModuleConfiguration moduleConfiguration = new ModuleConfiguration(0, 0, false, 0, false);
-  // private final SdsModuleConfigurations sdsMods = new
-  // SdsModuleConfigurations();
+  // private final SwerveModule swerveModule = new SwerveModule(null, null);
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryController, swerveSub);
 
   public RobotContainer() {
+    swerveSub.setDefaultCommand(defaultSwerve);
     configureBindings();
   }
 
