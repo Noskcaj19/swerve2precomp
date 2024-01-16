@@ -65,8 +65,8 @@ public class SwerveModule {
             int driveMotorID,
             int turningMotorID,
             int turningEncoderID,
-            boolean driveEncoderReversed,
-            boolean turningEncoderReversed,
+            boolean driveMotorInverted,
+            boolean turningMotorInverted,
             Rotation2d magnetOffset) {
 
         // add motor name
@@ -75,8 +75,8 @@ public class SwerveModule {
         turningMotor = new CANSparkMax(turningMotorID, MotorType.kBrushless);
         turningMotor.restoreFactoryDefaults();
 
-        driveMotor.setInverted(driveEncoderReversed);
-        turningMotor.setInverted(turningEncoderReversed);
+        driveMotor.setInverted(driveMotorInverted);
+        turningMotor.setInverted(turningMotorInverted);
 
         // add encoder name
         // makes it so you can define encoder channels for the modules in subsystem
@@ -88,7 +88,7 @@ public class SwerveModule {
         var config = new MagnetSensorConfigs();
         config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
         config.MagnetOffset = Units.degreesToRotations(magnetOffset.getDegrees());
-        config.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+        config.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
 
         // absoluteEncoder.configAllSettings(config, 250);
         // absoluteEncoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 100,
@@ -99,7 +99,7 @@ public class SwerveModule {
 
         // #region Motor controller setup
         driveMotor.setInverted(driveEncoderReversed);
-        turningMotor.setInverted(turningEncoderReversed);
+        turningMotor.setInverted(turningMotorReversed);
 
         turningMotor.setSmartCurrentLimit(20);
         driveMotor.setSmartCurrentLimit(80);
@@ -179,6 +179,5 @@ public class SwerveModule {
 
     public void resetEncoders() {
         driveEncoder.setPosition(0);
-        turningEncoder.setPosition(0);
     }
 }
