@@ -27,7 +27,7 @@ public class SwerveSubsystem extends SubsystemBase {
     XboxController primaryController = new XboxController(0);
     XboxController secondaryController = new XboxController(1);
 
-    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private static AHRS gyro = new AHRS(SPI.Port.kMXP);
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
@@ -46,6 +46,10 @@ public class SwerveSubsystem extends SubsystemBase {
         fRSwerve.setDesiredState(swerveModuleStates[1]);
         bLSwerve.setDesiredState(swerveModuleStates[2]);
         bRSwerve.setDesiredState(swerveModuleStates[3]);
+    }
+
+    public static void zeroYaw() {
+        gyro.zeroYaw();
     }
 
 }

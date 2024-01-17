@@ -30,6 +30,10 @@ public class DefaultSwerve extends Command {
             -primaryController.getLeftY(), 
             -primaryController.getRightX(),
             false);
+
+        if (primaryController.getXButtonPressed()) {
+            SwerveSubsystem.zeroYaw();
+        }
     }
 
     @Override

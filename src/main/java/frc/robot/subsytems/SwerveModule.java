@@ -8,6 +8,8 @@ import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -47,7 +49,7 @@ public class SwerveModule {
 
     // pid turning trapezoidal
 
-    private final PIDController turningPIDController = new PIDController(1.0 / (Math.PI / 2), 0, .0);
+//     private final PIDController turningPIDController = new PIDController(1.0 / (Math.PI / 2), 0, .0);
 
     // add values later
 
@@ -87,7 +89,7 @@ public class SwerveModule {
 
         absoluteEncoder = new CANcoder(turningEncoderID);
 
-        turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
+        // turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
         var config = new MagnetSensorConfigs();
         config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
@@ -137,14 +139,14 @@ public class SwerveModule {
                         Math.toRadians(Constants.ModuleConstants.TurningEncoderDegreesPerPulse) / 60);
         turningEncoder.setPosition(getAbsRad());
 
-        turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
+        // turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
         pidController = turningMotor.getPIDController();
         pidController.setP(1.0);
         pidController.setI(0.0);
         pidController.setD(0.1);
         // pidController.setFF(1.534);
-        // pidController.setOutputRange(-.5, .5);
+        pidController.setOutputRange(-1, 1);
 
         // Shuffleboard.getTab("Debug").addDouble("Turn Output Raw", () ->
         // m_turningMotor.get());
@@ -171,14 +173,15 @@ public class SwerveModule {
         SwerveModuleState state = SwerveModuleState.optimize(desiredState,
                 new Rotation2d(turningEncoder.getPosition()));
 
-        final double driveOutput = drivePIDController.calculate(driveEncoder.getVelocity(), state.speedMetersPerSecond);
+        // final double driveOutput = drivePIDController.calculate(driveEncoder.getVelocity(), state.speedMetersPerSecond);
 
-        final double turnOutput = turningPIDController.calculate(turningEncoder.getPosition(),
-                state.angle.getRadians());
+        // final double turnOutput = turningPIDController.calculate(turningEncoder.getPosition(),
+        //         state.angle.getRadians());
 
         // sets the motors to the calculated output
-        driveMotor.set(driveOutput);
-        turningMotor.set(turnOutput);
+        driveMotor.setVoltage((state.speedMetersPerSecond / Constants.DriveConstants.MaxVelocityMetersPerSecond) * 12 );
+        // turningMotor.set(turnOutput);
+        pidController.setReference(state.angle.getRadians(), ControlType.kPosition);
     }
 
     public void resetEncoders() {
