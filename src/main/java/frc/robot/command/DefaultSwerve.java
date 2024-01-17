@@ -29,7 +29,7 @@ public class DefaultSwerve extends Command {
             -primaryController.getLeftX(), 
             -primaryController.getLeftY(), 
             -primaryController.getRightX(),
-            false);
+            true);
 
         if (primaryController.getXButtonPressed()) {
             SwerveSubsystem.zeroYaw();

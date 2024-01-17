@@ -1,5 +1,6 @@
 package frc.robot.subsytems;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
@@ -13,6 +14,8 @@ import edu.wpi.first.wpilibj.SPI;
 
 //add motor channel numbers later
 public class SwerveSubsystem extends SubsystemBase {
+
+    private final SlewRateLimiter ratelim = new SlewRateLimiter(1);
 
     private final Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
     private final Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
@@ -33,9 +36,12 @@ public class SwerveSubsystem extends SubsystemBase {
             frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
 
     public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
-        var xSpeed = xPercent * Constants.DriveConstants.MaxVelocityMetersPerSecond;
-        var ySpeed = yPercent * Constants.DriveConstants.MaxVelocityMetersPerSecond;
+
+
+        var xSpeed = ratelim.calculate(xPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
+        var ySpeed = ratelim.calculate(yPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
         var rot = rotPercent * Constants.DriveConstants.MaxAngularVelocityRadiansPerSecond;
+
         var swerveModuleStates = kinematics.toSwerveModuleStates(
                 fieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
@@ -47,6 +53,8 @@ public class SwerveSubsystem extends SubsystemBase {
         bLSwerve.setDesiredState(swerveModuleStates[2]);
         bRSwerve.setDesiredState(swerveModuleStates[3]);
     }
+
+
 
     public static void zeroYaw() {
         gyro.zeroYaw();
