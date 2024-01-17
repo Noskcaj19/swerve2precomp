@@ -15,7 +15,9 @@ import edu.wpi.first.wpilibj.SPI;
 //add motor channel numbers later
 public class SwerveSubsystem extends SubsystemBase {
 
-    private final SlewRateLimiter ratelim = new SlewRateLimiter(1);
+    private final SlewRateLimiter xRateLimiter = new SlewRateLimiter(1);
+    private final SlewRateLimiter yRateLimiter = new SlewRateLimiter(1);
+    private final SlewRateLimiter rotRateLimiter = new SlewRateLimiter(1);
 
     private final Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
     private final Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
@@ -38,9 +40,9 @@ public class SwerveSubsystem extends SubsystemBase {
     public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
 
 
-        var xSpeed = ratelim.calculate(xPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
-        var ySpeed = ratelim.calculate(yPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
-        var rot = rotPercent * Constants.DriveConstants.MaxAngularVelocityRadiansPerSecond;
+        var xSpeed = xRateLimiter.calculate(xPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
+        var ySpeed = yRateLimiter.calculate(yPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
+        var rot = rotRateLimiter.calculate(rotPercent) * Constants.DriveConstants.MaxAngularVelocityRadiansPerSecond;
 
         var swerveModuleStates = kinematics.toSwerveModuleStates(
                 fieldRelative
