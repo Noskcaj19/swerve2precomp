@@ -61,14 +61,18 @@ public class SwerveModule {
             Float.POSITIVE_INFINITY,
             200 * 2);
 
+
+    public double getAbsRad() {
+        return absoluteEncoder.getAbsolutePosition().getValueAsDouble() * Math.PI * 2;
+    }
+
     public SwerveModule(
             int driveMotorID,
             int turningMotorID,
             int turningEncoderID,
             boolean driveMotorInverted,
             boolean turningMotorInverted,
-            Rotation2d magnetOffset) {
-
+            double magnetOffset) {
         // add motor name
         // makes it so you can define motor channels for the modules in subsystem
         driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
@@ -87,7 +91,7 @@ public class SwerveModule {
 
         var config = new MagnetSensorConfigs();
         config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
-        config.MagnetOffset = Units.degreesToRotations(magnetOffset.getDegrees());
+        config.MagnetOffset = magnetOffset;
         config.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
 
         // absoluteEncoder.configAllSettings(config, 250);
@@ -98,8 +102,8 @@ public class SwerveModule {
         absoluteEncoder.getAbsolutePosition().setUpdateFrequency(100, 250);
 
         // #region Motor controller setup
-        driveMotor.setInverted(driveEncoderReversed);
-        turningMotor.setInverted(turningMotorReversed);
+        driveMotor.setInverted(driveMotorInverted);
+        turningMotor.setInverted(turningMotorInverted);
 
         turningMotor.setSmartCurrentLimit(20);
         driveMotor.setSmartCurrentLimit(80);
@@ -131,7 +135,7 @@ public class SwerveModule {
         turningEncoder
                 .setVelocityConversionFactor(
                         Math.toRadians(Constants.ModuleConstants.TurningEncoderDegreesPerPulse) / 60);
-        turningEncoder.setPosition(Units.rotationsToRadians(absoluteEncoder.getAbsolutePosition().getValueAsDouble()));
+        turningEncoder.setPosition(getAbsRad());
 
         turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -148,7 +152,7 @@ public class SwerveModule {
         // m_driveMotor.get());
         Shuffleboard.getTab("Debug")
                 .addDouble("Measured Abs rotation" + turningEncoderID,
-                        () -> Units.rotationsToDegrees(absoluteEncoder.getAbsolutePosition().getValueAsDouble()));
+                        () -> getAbsRad());
         // Shuffleboard.getTab("Debug").addDouble("Integrated encoder", () ->
         // m_integratedTurningEncoder.getPosition());
     }
