@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.SPI;
 //add motor channel numbers later
 public class SwerveSubsystem extends SubsystemBase {
 
-    private final SlewRateLimiter xRateLimiter = new SlewRateLimiter(1);
-    private final SlewRateLimiter yRateLimiter = new SlewRateLimiter(1);
+    private final SlewRateLimiter xRateLimiter = new SlewRateLimiter(2);
+    private final SlewRateLimiter yRateLimiter = new SlewRateLimiter(2);
     private final SlewRateLimiter rotRateLimiter = new SlewRateLimiter(1);
 
     private final Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
