@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
-import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsytems.*;
 
 public class fetch {
     //i want robot dog
@@ -48,6 +48,16 @@ private ProfiledPIDController pidTheta = new ProfiledPIDController(
         var pose = LimelightHelpers.getTargetPose3d_RobotSpace("");
         return new Pose3d(pose[0], -pose[1], pose[2], new Rotation3d(pose[3], pose[4], pose[5]))
     }
+
+    public void AutoFaceApril3d(SwerveSubsystem ds) {
+    pidX.setGoal(new State(0, 0));
+    pidY.setGoal(new State(0.9, 0));
+    pidTheta.setGoal(new State(0, 0));
+
+    addRequirements(ds);
+    this.ds = ds;
+  }
+
 }
 
 
