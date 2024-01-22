@@ -3,7 +3,7 @@ package frc.robot.subsytems;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -17,20 +17,20 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private final SlewRateLimiter xRateLimiter = new SlewRateLimiter(2);
     private final SlewRateLimiter yRateLimiter = new SlewRateLimiter(2);
-    private final SlewRateLimiter rotRateLimiter = new SlewRateLimiter(1);
+    private final SlewRateLimiter rotRateLimiter = new SlewRateLimiter(2 );
 
     private final Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
     private final Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
     private final Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
     private final Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
-    private final SwerveModule fLSwerve = new SwerveModule(15, 14, 20, true, true, 0.47);
-    private final SwerveModule fRSwerve = new SwerveModule(13, 12, 19, true, true, 0.331);
-    private final SwerveModule bLSwerve = new SwerveModule(17, 16, 21, true, true,0.377);
-    private final SwerveModule bRSwerve = new SwerveModule(11, 10, 24, true, true, -0.01);
+    private final SwerveModule fLSwerve = new SwerveModule(15, 14, 20, true, true, -0.03);
+    private final SwerveModule fRSwerve = new SwerveModule(13, 12, 19, true, true, -0.169);
+    private final SwerveModule bLSwerve = new SwerveModule(17, 16, 21, true, true,-0.123);
+    private final SwerveModule bRSwerve = new SwerveModule(11, 10, 18, true, true, -0.51);
 
-    XboxController primaryController = new XboxController(0);
-    XboxController secondaryController = new XboxController(1);
+    Joystick primaryJoy = new Joystick(0);
+    Joystick SecondJoy = new Joystick(1);
 
     private static AHRS gyro = new AHRS(SPI.Port.kMXP);
 
@@ -40,9 +40,19 @@ public class SwerveSubsystem extends SubsystemBase {
     public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
 
 
+        
         var xSpeed = xRateLimiter.calculate(xPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
         var ySpeed = yRateLimiter.calculate(yPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
         var rot = rotRateLimiter.calculate(rotPercent) * Constants.DriveConstants.MaxAngularVelocityRadiansPerSecond;
+
+        if (!primaryJoy.getTrigger()) {
+            xSpeed *= 0.5;
+            ySpeed *= 0.5;
+            rot *= 0.2;
+        }
+        else {
+            rot *= 0.5;
+        }
 
         var swerveModuleStates = kinematics.toSwerveModuleStates(
                 fieldRelative

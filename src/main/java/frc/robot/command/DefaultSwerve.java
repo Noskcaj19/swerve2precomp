@@ -1,19 +1,23 @@
 package frc.robot.command;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsytems.*;
 
 public class DefaultSwerve extends Command {
 
-    private XboxController primaryController;
+    private Joystick joy;
     private SwerveSubsystem swerveSub;
+    Boolean slow = false;
 
-    public DefaultSwerve(XboxController primaryController, SwerveSubsystem swerveSub) {
+
+    public DefaultSwerve(Joystick joy, SwerveSubsystem swerveSub) {
 
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
-        this.primaryController = primaryController;
+        this.joy = joy;
     }
 
     @Override
@@ -24,14 +28,17 @@ public class DefaultSwerve extends Command {
     public void execute() {
 
         // swerve stuff goes here
-        //xspeed is xbox controller left joystick yspeed is also left joystick and rotation is right joystick 
+        //xspeed is xbox controller left joystick yspeed is also left joystick and rotation is right joystick
+        
+        //adding deadbands
+        
         swerveSub.drive(
-            -primaryController.getLeftX(), 
-            -primaryController.getLeftY(), 
-            -primaryController.getRightX(),
+            (MathUtil.applyDeadband(-joy.getY(), 0.08)), 
+            (MathUtil.applyDeadband(-joy.getX(), 0.08)), 
+            (MathUtil.applyDeadband(-joy.getTwist(), 0.08)),
             true);
 
-        if (primaryController.getXButtonPressed()) {
+        if (joy.getRawButton(1)) {
             SwerveSubsystem.zeroYaw();
         }
     }
