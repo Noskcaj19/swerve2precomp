@@ -16,17 +16,10 @@ public class LimelightlightDrive extends Command {
 
     public LimelightlightDrive(SwerveSubsystem swerveSub, XboxController primaryController) {
 
-<<<<<<< HEAD
-         addRequirements(swerveSub);
-         this.swerveSub = swerveSub;
-         this.limelight = 
-=======
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
-<<<<<<< HEAD
-
- }
-=======
+        this.limelight = addRequirements(swerveSub);
+        this.swerveSub = swerveSub;
         this.primaryController = primaryController;
 
     }
@@ -39,4 +32,3 @@ public class LimelightlightDrive extends Command {
     }
 
 }
->>>>>>> ea9d424 (im so sorry abby)
