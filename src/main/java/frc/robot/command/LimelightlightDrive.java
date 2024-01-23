@@ -18,7 +18,6 @@ public class LimelightlightDrive extends Command {
 
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
-        this.limelight = addRequirements(swerveSub);
         this.swerveSub = swerveSub;
         this.primaryController = primaryController;
 
@@ -26,8 +25,8 @@ public class LimelightlightDrive extends Command {
 
     @Override
     public void execute() {
-        if (LimelightHelpers.isTargetDetected()) {
-            double xOff = turnPID.calculate(LimelightHelpers.getXOffset());
+        if (LimelightHelpers.getTV(" ")) {
+            double xOff = turnPID.calculate(LimelightHelpers.getTA(" "));
         }
     }
 
