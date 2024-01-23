@@ -24,7 +24,6 @@ public class RobotContainer {
 
   // subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
-  // private final SwerveModule swerveModule = new SwerveModule(null, null);
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
