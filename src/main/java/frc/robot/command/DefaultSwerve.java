@@ -33,12 +33,12 @@ public class DefaultSwerve extends Command {
         //adding deadbands
         
         swerveSub.drive(
-            (MathUtil.applyDeadband(-joy.getY(), 0.08)), 
-            (MathUtil.applyDeadband(-joy.getX(), 0.08)), 
-            (MathUtil.applyDeadband(-joy.getTwist(), 0.08)),
+            (MathUtil.applyDeadband(-joy.getY(), 0.1)), 
+            (MathUtil.applyDeadband(-joy.getX(), 0.1)), 
+            (MathUtil.applyDeadband(-joy.getTwist(), 0.1)),
             true);
 
-        if (joy.getRawButton(1)) {
+        if (joy.getRawButton(5)) {
             SwerveSubsystem.zeroYaw();
         }
     }
