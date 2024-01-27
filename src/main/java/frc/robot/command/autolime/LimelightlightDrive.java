@@ -23,8 +23,13 @@ public class LimelightlightDrive extends Command {
     final double getZontal() {
         return (LimelightHelpers.getTX("") / 27);
         // return (x.getDouble(160)/160)-1;
+        //horizontal offset
     }
-
+    final double[] getStance() {
+        return (LimelightHelpers.getTargetPose_RobotSpace(""));
+        // return (x.getDouble(160)/160)-1;
+        //whatever the distance is
+    }
     public LimelightlightDrive(SwerveSubsystem swerveSub, boolean turnOff, XboxController primaryController) {
 
         // ignore me bbg
@@ -43,7 +48,7 @@ public class LimelightlightDrive extends Command {
 
             double xOff = turnPID.calculate(getZontal());
 
-            double[] distance = LimelightHelpers.getBotPose_TargetSpace(""); // array? T_T burrr
+            
 
             swerveSub.drive(0, xOff, 0, false);
         }
