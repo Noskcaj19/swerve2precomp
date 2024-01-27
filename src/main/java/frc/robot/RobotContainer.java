@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.command.DefaultSwerve;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
+import frc.robot.subsytems.Shooter;
 import frc.robot.subsytems.SwerveSubsystem;
 
 public class RobotContainer {
@@ -22,8 +23,9 @@ public class RobotContainer {
   private final Joystick primaryJoy = new Joystick(0);
   private final Joystick SecondJoy = new Joystick(1);
 
-  // subsystems
+  // TODO subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
+  private final Shooter shooterSub = new Shooter();
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
