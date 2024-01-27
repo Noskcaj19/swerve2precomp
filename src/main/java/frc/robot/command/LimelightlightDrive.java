@@ -18,7 +18,6 @@ public class LimelightlightDrive extends Command {
 
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
-        this.swerveSub = swerveSub;
         this.primaryController = primaryController;
 
     }
@@ -28,7 +27,7 @@ public class LimelightlightDrive extends Command {
         if (LimelightHelpers.getTV("")) {
             double xOff = turnPID.calculate(LimelightHelpers.getTX(""));
 
-            double distance = LimelightHelpers.targetPose_RobotSpace();
+            double[] distance = LimelightHelpers.getBotPose_TargetSpace(""); // array? T_T
 
         }
     }
