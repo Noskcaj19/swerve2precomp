@@ -9,10 +9,11 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.command.DefaultSwerve;
+import frc.robot.command.autolime.LimelightlightDrive;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
-import frc.robot.subsytems.Shooter;
 import frc.robot.subsytems.SwerveSubsystem;
 
 public class RobotContainer {
@@ -25,7 +26,7 @@ public class RobotContainer {
 
   // TODO subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
-  private final Shooter shooterSub = new Shooter();
+  // private final Shooter shooterSub = new Shooter();
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
@@ -36,6 +37,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    new JoystickButton(primaryJoy, 7).whileTrue(new LimelightlightDrive(swerveSub));
   }
 
   public Command getAutonomousCommand() {

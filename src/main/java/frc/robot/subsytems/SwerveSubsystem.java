@@ -37,7 +37,12 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
 
+
     public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
+        drive(xPercent, yPercent, rotPercent, fieldRelative, 0, 0);
+    }
+
+    public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative, double a, double b) {
 
 
         
@@ -53,6 +58,12 @@ public class SwerveSubsystem extends SubsystemBase {
         else {
             rot *= 0.5;
         }
+
+        // while(primaryJoy.getRawButton(7)){
+        //     xSpeed *= 0.75;
+        //     ySpeed *= 0.75;
+        //     rot *= 0.2; 
+        // }
 
         var swerveModuleStates = kinematics.toSwerveModuleStates(
                 fieldRelative
