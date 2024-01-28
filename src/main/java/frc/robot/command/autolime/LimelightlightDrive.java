@@ -15,8 +15,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 public class LimelightlightDrive extends Command {
 
     private SwerveSubsystem swerveSub;
-    private PIDController turnPID;
-    private PIDController distancePID;
+    private PIDController xPID;
+    private PIDController stancePID;
     boolean turnOff = false;
     private XboxController primaryController;
 
@@ -29,6 +29,8 @@ public class LimelightlightDrive extends Command {
         return (LimelightHelpers.getTargetPose_RobotSpace(""));
         // return (x.getDouble(160)/160)-1;
         //whatever the distance is
+        //returns the specific distance value we want so we can pid it???
+        //why is everything so 
     }
     public LimelightlightDrive(SwerveSubsystem swerveSub, boolean turnOff, XboxController primaryController) {
 
@@ -39,18 +41,26 @@ public class LimelightlightDrive extends Command {
         this.swerveSub = swerveSub;
         this.turnOff = turnOff;
         this.primaryController = primaryController;
-        turnPID = new PIDController(0.0525, 0.009, 0.0001);
+        xPID = new PIDController(0.0525, 0.009, 0.0001);
+        stancePID = new PIDController(0,0,0);
+
     }
 
     @Override
     public void execute() {
         if (LimelightHelpers.getTV("")) {
 
-            double xOff = turnPID.calculate(getZontal());
+            double xOff = xPID.calculate(getZontal());
 
+            // double yOff = stancePID.calculate(getStance(1));
+            //figure out how to use an array, which value of the array am i using??
+
+            System.out.println(getStance());
             
-
-            swerveSub.drive(0, xOff, 0, false);
+            swerveSub.drive(xOff, 0, 0, false);
+            //is x forward and backward??
+            //wtf
+            //is y forward?
         }
     }
 
