@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import com.kauailabs.navx.frc.AHRS;
@@ -70,6 +71,16 @@ public class SwerveSubsystem extends SubsystemBase {
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
                         : new ChassisSpeeds(xSpeed, ySpeed, rot));
         // TODO: DEFINE MAX SPEED
+        var swerveModuleStates = DriveConstants.kinematics.toSwerveModuleStates(
+            ChassisSpeeds.discretize(ChassisSpeeds, .02),
+            new Translation2d(DriveConstants.kTrackBaseMeters * a * 1.5,
+            DriveConstants.kTrackWidthMeters * b * 1.5));
+        )
+
+        
+ 
+        // 
+
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.DriveConstants.MaxVelocityMetersPerSecond);
         fLSwerve.setDesiredState(swerveModuleStates[0]);
         fRSwerve.setDesiredState(swerveModuleStates[1]);

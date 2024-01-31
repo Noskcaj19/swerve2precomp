@@ -38,8 +38,8 @@ public class LimelightlightDrive extends Command {
 
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
-        xPID = new ProfiledPIDController(1.2, 0, 0, new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2.5));
-        stancePID = new ProfiledPIDController(1.2,0,0, new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2.5));
+        xPID = new ProfiledPIDController(1.1, 0, 0, new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
+        stancePID = new ProfiledPIDController(1.1,0,0, new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
 
         //the robot cant like run into the limelight he needs to be close but not too close omg im gonna die
         stancePID.setGoal(new State(2,0));
