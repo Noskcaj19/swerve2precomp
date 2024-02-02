@@ -1,6 +1,6 @@
 {
   "NetworkTables": {
-    "Transitory Values": {
+    "Retained Values": {
       "open": false
     },
     "transitory": {
@@ -10,6 +10,12 @@
         }
       },
       "Shuffleboard": {
+        "Debug": {
+          "open": true
+        },
+        "open": true
+      },
+      "SmartDashboard": {
         "open": true
       },
       "limelight": {
@@ -18,7 +24,8 @@
         },
         "double[]##v_/limelight/targetpose_robotspace": {
           "open": true
-        }
+        },
+        "open": true
       }
     },
     "types": {
@@ -33,8 +40,7 @@
   },
   "NetworkTables Settings": {
     "mode": "Client (NT3)",
-    "serverTeam": "1523",
-    "visible": false
+    "serverTeam": "1523"
   },
   "Plots": {
     "Plot <0>": {

@@ -71,11 +71,11 @@ public class SwerveSubsystem extends SubsystemBase {
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
                         : new ChassisSpeeds(xSpeed, ySpeed, rot));
         // TODO: DEFINE MAX SPEED
-        var swerveModuleStates = DriveConstants.kinematics.toSwerveModuleStates(
+        var swerveModuleStates2 = DriveConstants.kinematics.toSwerveModuleStates(
             ChassisSpeeds.discretize(ChassisSpeeds, .02),
             new Translation2d(DriveConstants.kTrackBaseMeters * a * 1.5,
             DriveConstants.kTrackWidthMeters * b * 1.5));
-        )
+        }
 
         
  

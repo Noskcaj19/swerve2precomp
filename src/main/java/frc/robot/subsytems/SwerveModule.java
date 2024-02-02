@@ -153,6 +153,21 @@ public class SwerveModule {
                 // pidController.setFF(1.534);
                 pidController.setOutputRange(-1, 1);
 
+                    double currentAngleRadiansMod = integratedTurningEncoder.getPosition() % (2.0 * Math.PI);
+    if (currentAngleRadiansMod < 0.0) {
+      currentAngleRadiansMod += 2.0 * Math.PI;
+    }
+
+    // The reference angle has the range [0, 2pi) but the Neo's encoder can go above
+    // that
+    double adjustedReferenceAngleRadians = optimizedState.angle.getRadians() + m_integratedTurningEncoder.getPosition()
+        - currentAngleRadiansMod;
+    if (optimizedState.angle.getRadians() - currentAngleRadiansMod > Math.PI) {
+      adjustedReferenceAngleRadians -= 2.0 * Math.PI;
+    } else if (optimizedState.angle.getRadians() - currentAngleRadiansMod < -Math.PI) {
+      adjustedReferenceAngleRadians += 2.0 * Math.PI;
+    }
+
                 // Shuffleboard.getTab("Debug").addDouble("Turn Output Raw", () ->
                 // m_turningMotor.get());
                 // Shuffleboard.getTab("Debug").addDouble("Drive Output Raw", () ->
