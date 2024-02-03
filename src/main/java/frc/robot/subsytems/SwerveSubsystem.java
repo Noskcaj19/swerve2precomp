@@ -65,29 +65,26 @@ public class SwerveSubsystem extends SubsystemBase {
         //     ySpeed *= 0.75;
         //     rot *= 0.2; 
         // }
+        ChassisSpeeds chasSpeed = fieldRelative
+                ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
+                : new ChassisSpeeds(xSpeed, ySpeed, rot);
 
-        var swerveModuleStates = kinematics.toSwerveModuleStates(
-                fieldRelative
-                        ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
-                        : new ChassisSpeeds(xSpeed, ySpeed, rot));
+        var swerveModuleStates = kinematics.toSwerveModuleStates(chasSpeed);
+
         // TODO: DEFINE MAX SPEED
         var swerveModuleStates2 = DriveConstants.kinematics.toSwerveModuleStates(
-            ChassisSpeeds.discretize(ChassisSpeeds, .02),
+            ChassisSpeeds.discretize(chasSpeed, 0.2),
             new Translation2d(DriveConstants.kTrackBaseMeters * a * 1.5,
             DriveConstants.kTrackWidthMeters * b * 1.5));
-        }
-
-        
  
-        // 
-
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.DriveConstants.MaxVelocityMetersPerSecond);
+
         fLSwerve.setDesiredState(swerveModuleStates[0]);
         fRSwerve.setDesiredState(swerveModuleStates[1]);
         bLSwerve.setDesiredState(swerveModuleStates[2]);
         bRSwerve.setDesiredState(swerveModuleStates[3]);
-    }
-
+    
+        }
 
 
     public static void zeroYaw() {

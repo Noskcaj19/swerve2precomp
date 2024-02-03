@@ -128,7 +128,7 @@ public class SwerveModule {
 
                 driveEncoder = driveMotor.getEncoder();
                 // TODO: FIX CONSTANTS
-        double positionConversionFactor = Math.PI * Constants.ModuleType.getWheelDiameter()
+                double positionConversionFactor = Math.PI * Constants.ModuleType.getWheelDiameter()
                                 * Constants.ModuleType.getDriveReduction();
                 driveEncoder.setPositionConversionFactor(positionConversionFactor);
                 driveEncoder.setVelocityConversionFactor(positionConversionFactor / 60);
@@ -153,35 +153,12 @@ public class SwerveModule {
                 // pidController.setFF(1.534);
                 pidController.setOutputRange(-1, 1);
 
-                    double currentAngleRadiansMod = turningEncoder.getPosition() % (2.0 * Math.PI);
-
-                  public SwerveModuleState optimizeModuleState(SwerveModuleState rawState) {
-    var optimizedState = SwerveModuleState.optimize(rawState, Rotation2d.fromRadians(turningEncoder.getPosition()));
-
-    double currentAngleRadiansMod = turningEncoder.getPosition() % (2.0 * Math.PI);
-    if (currentAngleRadiansMod < 0.0) {
-      currentAngleRadiansMod += 2.0 * Math.PI;
-    }
-    if (currentAngleRadiansMod < 0.0) {
-      currentAngleRadiansMod += 2.0 * Math.PI;
-    }
-
-    // The reference angle has the range [0, 2pi) but the Neo's encoder can go above
-    // that
-    double adjustedReferenceAngleRadians = optimizedState.angle.getRadians() + turningEncoder.getPosition()
-        - currentAngleRadiansMod;
-    if (optimizedState.angle.getRadians() - currentAngleRadiansMod > Math.PI) {
-      adjustedReferenceAngleRadians -= 2.0 * Math.PI;
-    } else if (optimizedState.angle.getRadians() - currentAngleRadiansMod < -Math.PI) {
-      adjustedReferenceAngleRadians += 2.0 * Math.PI;
-    }
-
                 // Shuffleboard.getTab("Debug").addDouble("Turn Output Raw", () ->
                 // m_turningMotor.get());
                 // Shuffleboard.getTab("Debug").addDouble("Drive Output Raw", () ->
                 // m_driveMotor.get());
                 Shuffleboard.getTab("Debug")
-                                .addDouble("Measured Abs rotation" + turningEncoder,
+                                .addDouble("Measured Abs rotation" + turningEncoderID,
                                                 () -> getAbsRad());
                 // Shuffleboard.getTab("Debug").addDouble("Integrated encoder", () ->
                 // m_integratedTurningEncoder.getPosition());
