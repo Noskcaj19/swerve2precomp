@@ -154,6 +154,14 @@ public class SwerveModule {
                 pidController.setOutputRange(-1, 1);
 
                     double currentAngleRadiansMod = turningEncoder.getPosition() % (2.0 * Math.PI);
+
+                  public SwerveModuleState optimizeModuleState(SwerveModuleState rawState) {
+    var optimizedState = SwerveModuleState.optimize(rawState, Rotation2d.fromRadians(turningEncoder.getPosition()));
+
+    double currentAngleRadiansMod = turningEncoder.getPosition() % (2.0 * Math.PI);
+    if (currentAngleRadiansMod < 0.0) {
+      currentAngleRadiansMod += 2.0 * Math.PI;
+    }
     if (currentAngleRadiansMod < 0.0) {
       currentAngleRadiansMod += 2.0 * Math.PI;
     }
@@ -173,7 +181,7 @@ public class SwerveModule {
                 // Shuffleboard.getTab("Debug").addDouble("Drive Output Raw", () ->
                 // m_driveMotor.get());
                 Shuffleboard.getTab("Debug")
-                                .addDouble("Measured Abs rotation" + turningEncoderID,
+                                .addDouble("Measured Abs rotation" + turningEncoder,
                                                 () -> getAbsRad());
                 // Shuffleboard.getTab("Debug").addDouble("Integrated encoder", () ->
                 // m_integratedTurningEncoder.getPosition());
