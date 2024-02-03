@@ -197,3 +197,13 @@ public class SwerveModule {
                 driveEncoder.setPosition(0);
         }
 }
+
+//but im a CounterClockwise_Positive
+//im a weirdoOoooo
+//what the hell am i doing here
+//i dont belong here
+// //oOoO
+// shEEEeeeees
+// rUnning out of TIIIMmeeee
+// shEEessss
+// rUUning out of TimETIMETIMETIMEEEEEEEEEeeeee
