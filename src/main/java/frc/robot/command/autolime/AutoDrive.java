@@ -1,27 +1,55 @@
 package frc.robot.command.autolime;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-// import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsytems.SwerveSubsystem;
+import frc.robot.subsytems.SwerveModule;
 
 public class AutoDrive extends Command {
 
     private SwerveSubsystem swerveSub;
+    private SwerveModule swerveMod;
+    private double distance;
+    private double speed;
+    private double position;
+    private boolean done;
 
     public AutoDrive(SwerveSubsystem swerveSub) {
+        addRequirements(swerveSub);
 
         this.swerveSub = swerveSub;
-     
-}package frc.robot.command.autolime;
+        this.distance = distance;
+        this.speed = speed;
+        this.position = position;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-// import frc.robot.subsystems.Drivetrain;
+    }
 
-public class AutoDrive extends CommandBase {
+    @Override
+    public void initialize() {
+        swerveSub.zeroYaw();
+    }
 
-    private SwerveSubsystem swerveSub;
+    final double setDistance(double distance) {
+        return distance;
+    }
 
-    public BalanceAuto(Drivetrain drivetrain, double speed) {
-
-        this.swerveSub = swerveSub;
-        
-}    }
+    final double setPosition(double position) {
+        return position;
+    }
+}
+/*
+ * @Override
+ * public void execute(){
+ * if (distance > 0) {
+ * if (swerveMod.getPosition(). > position ) {
+ * swerveSub.drive(speed, 0, 0, isFinished());
+ * }
+ * else {
+ * swerveSub.drive(0,0,0,isFinished());
+ * done = true;
+ * }
+ * 
+ * }
+ * }
+ * 
+ * }
+ */

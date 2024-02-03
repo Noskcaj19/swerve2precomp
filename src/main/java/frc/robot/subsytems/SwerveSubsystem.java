@@ -12,13 +12,12 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
-
 //add motor channel numbers later
 public class SwerveSubsystem extends SubsystemBase {
 
     private final SlewRateLimiter xRateLimiter = new SlewRateLimiter(2);
     private final SlewRateLimiter yRateLimiter = new SlewRateLimiter(2);
-    private final SlewRateLimiter rotRateLimiter = new SlewRateLimiter(2 );
+    private final SlewRateLimiter rotRateLimiter = new SlewRateLimiter(2);
 
     private final Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
     private final Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
@@ -38,15 +37,12 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
 
-
     public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
         drive(xPercent, yPercent, rotPercent, fieldRelative, 0, 0);
     }
 
     public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative, double a, double b) {
 
-
-        
         var xSpeed = xRateLimiter.calculate(xPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
         var ySpeed = yRateLimiter.calculate(yPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
         var rot = rotRateLimiter.calculate(rotPercent) * Constants.DriveConstants.MaxAngularVelocityRadiansPerSecond;
@@ -55,15 +51,14 @@ public class SwerveSubsystem extends SubsystemBase {
             xSpeed *= 0.5;
             ySpeed *= 0.5;
             rot *= 0.2;
-        }
-        else {
+        } else {
             rot *= 0.5;
         }
 
         // while(primaryJoy.getRawButton(7)){
-        //     xSpeed *= 0.75;
-        //     ySpeed *= 0.75;
-        //     rot *= 0.2; 
+        // xSpeed *= 0.75;
+        // ySpeed *= 0.75;
+        // rot *= 0.2;
         // }
         ChassisSpeeds chasSpeed = fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
@@ -73,19 +68,19 @@ public class SwerveSubsystem extends SubsystemBase {
 
         // TODO: DEFINE MAX SPEED
         var swerveModuleStates2 = DriveConstants.kinematics.toSwerveModuleStates(
-            ChassisSpeeds.discretize(chasSpeed, 0.2),
-            new Translation2d(DriveConstants.kTrackBaseMeters * a * 1.5,
-            DriveConstants.kTrackWidthMeters * b * 1.5));
- 
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.DriveConstants.MaxVelocityMetersPerSecond);
+                ChassisSpeeds.discretize(chasSpeed, 0.2),
+                new Translation2d(DriveConstants.kTrackBaseMeters * a * 1.5,
+                        DriveConstants.kTrackWidthMeters * b * 1.5));
+
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,
+                Constants.DriveConstants.MaxVelocityMetersPerSecond);
 
         fLSwerve.setDesiredState(swerveModuleStates[0]);
         fRSwerve.setDesiredState(swerveModuleStates[1]);
         bLSwerve.setDesiredState(swerveModuleStates[2]);
         bRSwerve.setDesiredState(swerveModuleStates[3]);
-    
-        }
 
+    }
 
     public static void zeroYaw() {
         gyro.zeroYaw();
