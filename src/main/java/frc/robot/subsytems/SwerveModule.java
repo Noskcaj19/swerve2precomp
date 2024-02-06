@@ -24,6 +24,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.Constants;
+
 public class SwerveModule {
 
         // add motor model later
@@ -45,6 +46,9 @@ public class SwerveModule {
         // add tuning values
 
         private final PIDController drivePIDController = new PIDController(.1, 0, 0);
+
+        // i i i ffffffffffffffffffff
+        SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.18359, 3.0413);
 
         // pid turning trapezoidal
 
@@ -175,22 +179,45 @@ public class SwerveModule {
         }
 
         public void setDesiredState(SwerveModuleState desiredState) {
-                SwerveModuleState state = SwerveModuleState.optimize(desiredState,
-                                new Rotation2d(turningEncoder.getPosition()));
+                // Optimize the reference state to avoid spinning further than 90 degrees
+                // SwerveModuleState state = optimizeModuleState(desiredState);
+                SwerveModuleState state = desiredState;
 
-                // final double driveOutput =
-                // drivePIDController.calculate(driveEncoder.getVelocity(),
-                // state.speedMetersPerSecond);
+                var fff = feedforward.calculate(desiredState.speedMetersPerSecond);
+                System.out.println(fff);
 
-                // final double turnOutput =
-                // turningPIDController.calculate(turningEncoder.getPosition(),
-                // state.angle.getRadians());
+                // Calculate the turning motor output from the turning PID controller.
+                driveMotor.setVoltage(
+                                ((state.speedMetersPerSecond / Constants.DriveConstants.MaxVelocityMetersPerSecond)
+                                                * 12) + fff);
 
-                // sets the motors to the calculated output
-                driveMotor.setVoltage((state.speedMetersPerSecond / Constants.DriveConstants.MaxVelocityMetersPerSecond)
-                                * 12);
-                // turningMotor.set(turnOutput);
                 pidController.setReference(state.angle.getRadians(), ControlType.kPosition);
+        }
+
+        public SwerveModuleState optimizeModuleState(SwerveModuleState rawState) {
+                var optimizedState = SwerveModuleState.optimize(rawState,
+                                Rotation2d.fromRadians(turningEncoder.getPosition()));
+
+                double currentAngleRadiansMod = turningEncoder.getPosition() % (2.0 * Math.PI);
+                if (currentAngleRadiansMod < 0.0) {
+                        currentAngleRadiansMod += 2.0 * Math.PI;
+                }
+
+                // The reference angle has the range [0, 2pi) but the Neo's encoder can go above
+                // that
+                double adjustedReferenceAngleRadians = optimizedState.angle.getRadians() + turningEncoder.getPosition()
+                                - currentAngleRadiansMod;
+                if (optimizedState.angle.getRadians() - currentAngleRadiansMod > Math.PI) {
+                        adjustedReferenceAngleRadians -= 2.0 * Math.PI;
+                } else if (optimizedState.angle.getRadians() - currentAngleRadiansMod < -Math.PI) {
+                        adjustedReferenceAngleRadians += 2.0 * Math.PI;
+                }
+
+                // pidController.setReference(0,ControlType.kPosition);
+                // pidController.setReference(state.angle.getRadians(), ControlType.kPosition);
+
+                return new SwerveModuleState(optimizedState.speedMetersPerSecond,
+                                Rotation2d.fromRadians(adjustedReferenceAngleRadians));
         }
 
         public void resetEncoders() {
@@ -198,10 +225,10 @@ public class SwerveModule {
         }
 }
 
-//but im a CounterClockwise_Positive
-//im a weirdoOoooo
-//what the hell am i doing here
-//i dont belong here
+// but im a CounterClockwise_Positive
+// im a weirdoOoooo
+// what the hell am i doing here
+// i dont belong here
 // //oOoO
 // shEEEeeeees
 // rUnning out of TIIIMmeeee
