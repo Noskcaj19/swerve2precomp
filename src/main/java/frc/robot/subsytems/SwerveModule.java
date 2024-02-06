@@ -183,7 +183,7 @@ public class SwerveModule {
                 SwerveModuleState state = optimizeModuleState(desiredState);
                 // SwerveModuleState state = desiredState;
 
-                var fff =0;// feedforward.calculate(desiredState.speedMetersPerSecond);
+                var fff = feedforward.calculate(state.speedMetersPerSecond);
                 System.out.println(fff);
 
                 // Calculate the turning motor output from the turning PID controller.
@@ -207,11 +207,11 @@ public class SwerveModule {
                 // that
                 double adjustedReferenceAngleRadians = optimizedState.angle.getRadians() + turningEncoder.getPosition()
                                 - currentAngleRadiansMod;
-                if (optimizedState.angle.getRadians() - currentAngleRadiansMod > Math.PI) {
-                        adjustedReferenceAngleRadians -= 2.0 * Math.PI;
-                } else if (optimizedState.angle.getRadians() - currentAngleRadiansMod < -Math.PI) {
-                        adjustedReferenceAngleRadians += 2.0 * Math.PI;
-                }
+                        if (optimizedState.angle.getRadians() - currentAngleRadiansMod > Math.PI) {
+                                adjustedReferenceAngleRadians -= 2.0 * Math.PI;
+                        } else if (optimizedState.angle.getRadians() - currentAngleRadiansMod < -Math.PI) {
+                                adjustedReferenceAngleRadians += 2.0 * Math.PI;
+                        }
 
                 // pidController.setReference(0,ControlType.kPosition);
                 // pidController.setReference(state.angle.getRadians(), ControlType.kPosition);
