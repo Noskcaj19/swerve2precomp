@@ -180,10 +180,10 @@ public class SwerveModule {
 
         public void setDesiredState(SwerveModuleState desiredState) {
                 // Optimize the reference state to avoid spinning further than 90 degrees
-                // SwerveModuleState state = optimizeModuleState(desiredState);
-                SwerveModuleState state = desiredState;
+                SwerveModuleState state = optimizeModuleState(desiredState);
+                // SwerveModuleState state = desiredState;
 
-                var fff = feedforward.calculate(desiredState.speedMetersPerSecond);
+                var fff =0;// feedforward.calculate(desiredState.speedMetersPerSecond);
                 System.out.println(fff);
 
                 // Calculate the turning motor output from the turning PID controller.
