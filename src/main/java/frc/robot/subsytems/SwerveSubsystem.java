@@ -9,6 +9,9 @@ import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -82,8 +85,34 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    SwerveDriveOdometry ometry = new SwerveDriveOdometry(
+            kinematics,
+            gyro.getRotation2d(),
+            new SwerveModulePosition[] {
+                    fLSwerve.getPosition(),
+                    fRSwerve.getPosition(),
+                    bLSwerve.getPosition(),
+                    bRSwerve.getPosition()
+            });
+
     public static void zeroYaw() {
         gyro.zeroYaw();
+    }
+
+    @Override
+    public void periodic() {
+        // TODO Auto-generated method stub
+        ometry.update(
+            gyro.getRotation2d(),
+             new SwerveModulePosition[] {
+                        fLSwerve.getPosition(),
+                        fRSwerve.getPosition(),
+                        bLSwerve.getPosition(),
+                        bRSwerve.getPosition()
+                }
+
+        );
+
     }
 
 }
