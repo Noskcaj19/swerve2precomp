@@ -1,8 +1,10 @@
 package frc.robot.subsytems;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -11,6 +13,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
@@ -45,6 +53,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void drive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative, double a, double b) {
+
 
         var xSpeed = xRateLimiter.calculate(xPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
         var ySpeed = yRateLimiter.calculate(yPercent) * Constants.DriveConstants.MaxVelocityMetersPerSecond;
@@ -83,6 +92,31 @@ public class SwerveSubsystem extends SubsystemBase {
         bLSwerve.setDesiredState(swerveModuleStates[2]);
         bRSwerve.setDesiredState(swerveModuleStates[3]);
 
+            AutoBuilder.configureHolonomic(
+            this::getPose, // Robot pose supplier
+            this::resetOmetry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                    4.5, // Max module speed, in m/s
+                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                    new ReplanningConfig() // Default path replanning config. See the API for the options here
+            ),
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
     }
 
     SwerveDriveOdometry ometry = new SwerveDriveOdometry(
@@ -98,6 +132,8 @@ public class SwerveSubsystem extends SubsystemBase {
     public static void zeroYaw() {
         gyro.zeroYaw();
     }
+   // Configure AutoBuilder last
+
 
     @Override
     public void periodic() {
@@ -113,6 +149,37 @@ public class SwerveSubsystem extends SubsystemBase {
 
         );
 
+    }
+
+    public Pose2d getPose() {
+        System.out.println(ometry.getPoseMeters());
+        return ometry.getPoseMeters();
+    }
+
+    public void resetOmetry(Pose2d pose) {
+        ometry.resetPosition(
+                gyro.getRotation2d(),
+                new SwerveModulePosition[] {
+                        fLSwerve.getPosition(),
+                        fRSwerve.getPosition(),
+                        bLSwerve.getPosition(),
+                        bRSwerve.getPosition()
+                },
+                pose);
+    }
+
+         public SwerveModuleState[] getModuleStates() {
+    SwerveModuleState[] states = {
+        fLSwerve.getState(),
+        fRSwerve.getState(),
+        bLSwerve.getState(),
+        bRSwerve.getState(),
+    };
+    return states;
+  }
+
+    public ChassisSpeeds getSpeeds() {
+        return DriveConstants.kinematics.toChassisSpeeds(getModuleStates());
     }
 
 }
