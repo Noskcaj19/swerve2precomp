@@ -15,6 +15,9 @@ import frc.robot.command.autolime.LimelightlightDrive;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
 import frc.robot.subsytems.SwerveSubsystem;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+   
+ 
 
 public class RobotContainer {
 
@@ -38,9 +41,10 @@ public class RobotContainer {
 
   private void configureBindings() {
     new JoystickButton(primaryJoy, 7).whileTrue(new LimelightlightDrive(swerveSub));
+    new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New Auto"));
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+   return Commands.print("No autonomous command configured");
   }
 }
