@@ -16,6 +16,7 @@ import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
 import frc.robot.subsytems.SwerveSubsystem;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.util;
    
  
 
@@ -37,6 +38,10 @@ public class RobotContainer {
   public RobotContainer() {
     swerveSub.setDefaultCommand(defaultSwerve);
     configureBindings();
+
+    //push commands to pathweaver auto
+    //NamedCommands.registerCommand
+    
   }
 
   private void configureBindings() {
