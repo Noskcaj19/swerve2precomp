@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class climbsub extends SubsystemBase{
-    private CANSparkMax arm1 = new CANSparkMax(id,  MotorType.kBrushed);
+public class Climbsub extends SubsystemBase{
+
+    
+    private CANSparkMax arm1 = new CANSparkMax(0,  MotorType.kBrushed);
 }

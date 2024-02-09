@@ -7,21 +7,30 @@ package frc.robot;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.command.DefaultShooter;
 import frc.robot.command.DefaultSwerve;
+import frc.robot.command.Move;
+import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.LimelightlightDrive;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
+import frc.robot.subsytems.Mouth;
+import frc.robot.subsytems.Shooter;
 import frc.robot.subsytems.SwerveSubsystem;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.util;
-   
- 
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
+import com.pathplanner.lib.auto.AutoBuilder;
 
 public class RobotContainer {
 
+  private final SendableChooser<Command> autoChooser;
   private final Robot robot = new Robot();
 
   // controllers
@@ -30,17 +39,25 @@ public class RobotContainer {
 
   // TODO subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
+  private final Mouth mouth = new Mouth();
   // private final Shooter shooterSub = new Shooter();
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
+  private final Move intakeTransport = new Move(mouth, primaryJoy);
 
   public RobotContainer() {
     swerveSub.setDefaultCommand(defaultSwerve);
     configureBindings();
 
+    Shooter shooterSub = new Shooter();
+    AutoDrive step = new AutoDrive(swerveSub);
     //push commands to pathweaver auto
-    //NamedCommands.registerCommand
+    NamedCommands.registerCommand("drive", step);
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    Shuffleboard.getTab("autoChooser").add(autoChooser);
     
   }
 
@@ -50,6 +67,14 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-   return new PathPlannerAuto("New New Auto");
+    var command = autoChooser.getSelected();
+
+    if(command != null){
+      return command;
+    }
+    else{
+      return new Command() {
+      };
+    }
   }
 }

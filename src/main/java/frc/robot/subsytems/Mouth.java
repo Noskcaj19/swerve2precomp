@@ -1,7 +1,7 @@
 package frc.robot.subsytems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 //i dont understand im so tired
 //why is it deprecated
@@ -10,12 +10,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class in extends SubsystemBase{
+public class Mouth extends SubsystemBase{
 
+    private  CANSparkMax intake = new CANSparkMax(0, MotorType.kBrushed );
+    private  CANSparkMax transport = new CANSparkMax(0, MotorType.kBrushed);
     //motors that first grab the note under the bumber 
     //kind of like beatle jaws
-    private CANSparkMax jaw1 = new CANSparkMax(id, MotorType.kBrushed );
-    private CANSparkMax jaw2 = new CANSparkMax(id, MotorType.kBrushed);
+    public Mouth(){}
+
     //define more motors
     //however many are in the intake
     //because it is kind of sucking the note under the bumper the two jaws are inverted versions of eachother
@@ -25,12 +27,16 @@ public class in extends SubsystemBase{
 
     // the name suck is so cursed dude omg
     //im so tired
-    public void suck(){
+    public  void eat(boolean on){
         //um uh idk
         //set each motor to go inwards towards center of robot
+
+        intake.set(0.5);
     }
 
-    public void yuck(){
+    public  void sing(boolean on){
         //set all the values of suck to negative???? maybe???? idk???
+        intake.set(-0.5);
     }
 }
+
