@@ -1,5 +1,7 @@
 package frc.robot.command.autolime;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsytems.SwerveSubsystem;
 import frc.robot.subsytems.SwerveModule;
@@ -10,7 +12,7 @@ public class AutoDrive extends Command {
     private SwerveModule swerveMod;
     private double distance;
     private double speed;
-    private double position;
+    private Translation2d startPosition;
     private boolean done;
 
     public AutoDrive(SwerveSubsystem swerveSub) {
@@ -19,27 +21,33 @@ public class AutoDrive extends Command {
         this.swerveSub = swerveSub;
         this.distance = distance;
         this.speed = speed;
-        this.position = position;
+        this.startPosition = startPosition;
 
     }
 
     @Override
     public void initialize() {
         swerveSub.zeroYaw();
-    }
-
-    final double setDistance(double distance) {
-        return distance;
-    }
-
-    final double setPosition(double position) {
-        return position;
+        startPosition = swerveSub.getPose().getTranslation();
     }
 
     @Override
     public void execute() {
-        if(distance > 0){
-            if(distance > )
+        // drive forqard
+
+    }
+
+    @Override
+    public boolean isFinished() {
+
+        // TODO tweak for going backwards?
+
+        double dist = swerveSub.getPose().getTranslation().getDistance(startPosition);
+        if (distance > 0 && distance < dist) {
+            return true;
+
+        } else {
+            return false;
         }
 
     }
