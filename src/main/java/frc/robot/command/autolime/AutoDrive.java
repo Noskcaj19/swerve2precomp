@@ -35,21 +35,12 @@ public class AutoDrive extends Command {
     final double setPosition(double position) {
         return position;
     }
+
+    @Override
+    public void execute() {
+        if(distance > 0){
+            if(distance > )
+        }
+
+    }
 }
-/*
- * @Override
- * public void execute(){
- * if (distance > 0) {
- * if (swerveMod.getPosition(). > position ) {
- * swerveSub.drive(speed, 0, 0, isFinished());
- * }
- * else {
- * swerveSub.drive(0,0,0,isFinished());
- * done = true;
- * }
- * 
- * }
- * }
- * 
- * }
- */
