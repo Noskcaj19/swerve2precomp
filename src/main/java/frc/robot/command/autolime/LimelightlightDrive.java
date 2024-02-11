@@ -22,15 +22,17 @@ public class LimelightlightDrive extends Command {
     final double getZontal() {
         return (LimelightHelpers.getTX("") / 27);
         // return (x.getDouble(160)/160)-1;
-        //horizontal offset
+        // horizontal offset
     }
+
     final double getSpace(int index) {
         return (LimelightHelpers.getTargetPose_RobotSpace("")[index]);
         // return (x.getDouble(160)/160)-1;
-        //whatever the distance is
-        //returns the specific distance value we want so we can pid it???
-        //why is everything so 
+        // whatever the distance is
+        // returns the specific distance value we want so we can pid it???
+        // why is everything so
     }
+
     public LimelightlightDrive(SwerveSubsystem swerveSub) {
 
         // ignore me bbg
@@ -38,11 +40,14 @@ public class LimelightlightDrive extends Command {
 
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
-        xPID = new ProfiledPIDController(1.1, 0, 0, new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
-        stancePID = new ProfiledPIDController(1.1,0,0, new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
+        xPID = new ProfiledPIDController(1.1, 0, 0,
+                new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
+        stancePID = new ProfiledPIDController(1.1, 0, 0,
+                new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
 
-        //the robot cant like run into the limelight he needs to be close but not too close omg im gonna die
-        stancePID.setGoal(new State(2,0));
+        // the robot cant like run into the limelight he needs to be close but not too
+        // close omg im gonna die
+        stancePID.setGoal(new State(2, 0));
 
     }
 
@@ -53,23 +58,19 @@ public class LimelightlightDrive extends Command {
             double xOff = xPID.calculate(getZontal());
 
             double yOff = -stancePID.calculate(getSpace(2));
-            //figure out how to use an array, which value of the array am i using??
+            // figure out how to use an array, which value of the array am i using??
 
             double rot = -stancePID.calculate(getSpace(4));
 
-
-
-            
-            //how do i set a different goal for the distance
+            // how do i set a different goal for the distance
 
             // System.out.println(getStance());
-            
+
             swerveSub.drive(yOff, xOff, 0, false);
-            //is x forward and backward??
-            //wtf
-            //is y forward?
-        }
-        else{
+            // is x forward and backward??
+            // wtf
+            // is y forward?
+        } else {
             swerveSub.drive(0, 0, 0, false);
         }
     }

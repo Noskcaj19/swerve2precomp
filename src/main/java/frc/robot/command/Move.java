@@ -28,7 +28,7 @@ public class Move extends Command {
             mouth.eat(status);
         }
 
-        if (primaryJoystick.getRawButton(4)) {
+        else if (primaryJoystick.getRawButton(4)) {
             status = !status;
             mouth.sing(status);
         }
