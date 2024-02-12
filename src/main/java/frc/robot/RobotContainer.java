@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.command.ClimbCommand;
 import frc.robot.command.DefaultShooter;
 import frc.robot.command.DefaultSwerve;
 import frc.robot.command.Move;
@@ -18,6 +19,7 @@ import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.LimelightlightDrive;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
+import frc.robot.subsytems.Arms;
 import frc.robot.subsytems.Mouth;
 import frc.robot.subsytems.Shooter;
 import frc.robot.subsytems.SwerveSubsystem;
@@ -40,11 +42,14 @@ public class RobotContainer {
   // TODO subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
   private final Mouth mouth = new Mouth();
+  private final Arms Arms = new Arms();
   // private final Shooter shooterSub = new Shooter();
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
   private final Move intakeTransport = new Move(mouth, primaryJoy);
+  private final ClimbCommand climbCommand = new ClimbCommand(SecondJoy, Arms);
+  //not sure why its an error teehee
 
   public RobotContainer() {
     swerveSub.setDefaultCommand(defaultSwerve);

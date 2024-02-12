@@ -6,17 +6,17 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Climb extends SubsystemBase {
+public class Arms extends SubsystemBase {
 
     private CANSparkMax arm1 = new CANSparkMax(0, MotorType.kBrushed);
     private CANSparkMax arm2 = new CANSparkMax(0, MotorType.kBrushed);
 
     // private
 
-    public Climb() {
+    public Arms() {
     }
 
-    public void updown(boolean choice) {
+    public void upDown(boolean choice) {
         if (choice) {
             arm1.set(.5);
             arm2.set(.5);
