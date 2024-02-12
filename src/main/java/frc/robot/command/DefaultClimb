@@ -9,18 +9,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsytems.Arms;
 
-public class Climbcommand extends CommandBase{
+public class DefaultClimb extends CommandBase{
 
     private Joystick joy;
     private Arms climbSub = new Arms();
     boolean status = false;
 
-public Climbcommand (Joystick inJoy, Arms climb){
+public DefaultClimb (Joystick inJoy, Arms climb){
     this.climbSub = climb;
     this.joy = inJoy;
 }
 
- 
     @Override
     public void execute() {
         if(joy.getRawButton(10)){

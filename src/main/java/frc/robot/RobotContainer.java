@@ -48,7 +48,7 @@ public class RobotContainer {
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
   private final Move intakeTransport = new Move(mouth, primaryJoy);
-  private final Climbcommand climbCommand = new Climbcommand(SecondJoy, Arms);
+  private final DefaultClimb climbCommand = new DefaultClimb(SecondJoy, Arms);
   //not sure why its an error teehee
 
   public RobotContainer() {
