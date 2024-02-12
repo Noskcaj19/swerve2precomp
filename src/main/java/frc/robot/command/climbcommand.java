@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsytems.Arms;
 
-public class ClimbCommand extends CommandBase{
+public class Climbcommand extends CommandBase{
 
     private Joystick joy;
     private Arms climbSub = new Arms();
     boolean status = false;
 
-public ClimbCommand (Joystick inJoy, Arms climb){
+public Climbcommand (Joystick inJoy, Arms climb){
     this.climbSub = climb;
     this.joy = inJoy;
 }
