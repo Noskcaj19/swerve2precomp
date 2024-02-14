@@ -16,4 +16,8 @@ public class AutoShoot extends Command {
         shootSub.setAmpSpeed();
     }
 
+    public boolean isFinished() {
+        return false;
+    }
+
 }
