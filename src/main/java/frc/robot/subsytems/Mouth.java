@@ -10,33 +10,40 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Mouth extends SubsystemBase{
+public class Mouth extends SubsystemBase {
 
-    private  CANSparkMax intake = new CANSparkMax(0, MotorType.kBrushed );
-    private  CANSparkMax transport = new CANSparkMax(0, MotorType.kBrushed);
-    //motors that first grab the note under the bumber 
-    //kind of like beatle jaws
-    public Mouth(){}
+    private CANSparkMax intakeOne = new CANSparkMax(0, MotorType.kBrushed);
+    private CANSparkMax intakeTwo = new CANSparkMax(0, MotorType.kBrushed);
+    private CANSparkMax transport = new CANSparkMax(0, MotorType.kBrushed);
 
-    //define more motors
-    //however many are in the intake
-    //because it is kind of sucking the note under the bumper the two jaws are inverted versions of eachother
-    //to suck the note in : the right bumber spins clockwise and the left spins cc
-    //to spit it out that is reversed
-
-
-    // the name suck is so cursed dude omg
-    //im so tired
-    public  void eat(boolean on){
-        //um uh idk
-        //set each motor to go inwards towards center of robot
-
-        intake.set(0.5);
+    // motors that first grab the note under the bumber
+    // kind of like beatle jaws
+    public Mouth() {
     }
 
-    public  void sing(boolean on){
-        //set all the values of suck to negative???? maybe???? idk???
-        intake.set(-0.5);
+    // define more motors
+    // however many are in the intake
+    // because it is kind of sucking the note under the bumper the two jaws are
+    // inverted versions of eachother
+    // to suck the note in : the right bumber spins clockwise and the left spins cc
+    // to spit it out that is reversed
+
+    // im so tired
+    // eat takes in the note
+    // it intakes it
+    public void eat(boolean on) {
+        // um uh idk
+        // set each motor to go inwards towards center of robot
+
+        intakeOne.set(0.5);
+        intakeTwo.set(0.5);
+        transport.set(0.5);
+    }
+
+    public void sing(boolean on) {
+        // set all the values of suck to negative???? maybe???? idk???
+        intakeOne.set(0.5);
+        intakeTwo.set(0.5);
+        transport.set(0.5);
     }
 }
-

@@ -49,7 +49,7 @@ public class RobotContainer {
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
   private final Move intakeTransport = new Move(mouth, primaryJoy);
   private final DefaultClimb climbCommand = new DefaultClimb(SecondJoy, Arms);
-  //:)
+  // :)
 
   public RobotContainer() {
     swerveSub.setDefaultCommand(defaultSwerve);
@@ -57,13 +57,13 @@ public class RobotContainer {
 
     Shooter shooterSub = new Shooter();
     AutoDrive step = new AutoDrive(swerveSub);
-    //push commands to pathweaver auto
+    // push commands to pathweaver auto
     NamedCommands.registerCommand("drive", step);
 
     autoChooser = AutoBuilder.buildAutoChooser();
 
     Shuffleboard.getTab("autoChooser").add(autoChooser);
-    
+
   }
 
   private void configureBindings() {
@@ -74,10 +74,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     var command = autoChooser.getSelected();
 
-    if(command != null){
+    if (command != null) {
       return command;
-    }
-    else{
+    } else {
       return new Command() {
       };
     }

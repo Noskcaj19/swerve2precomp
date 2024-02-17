@@ -12,10 +12,12 @@ public class AutoDrive extends Command {
     private double speed;
     private Translation2d startPosition;
 
-    public AutoDrive(SwerveSubsystem swerveSub) {
+    public AutoDrive(SwerveSubsystem swerveSub, double distance, double speed) {
 
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
+        this.distance = distance;
+        this.speed = speed;
 
     }
 
@@ -28,7 +30,13 @@ public class AutoDrive extends Command {
     @Override
     public void execute() {
         // drive forqard
+        swerveSub.drive(speed, 0, 0, false, 0, 0);
+        // hird
+    }
 
+    @Override
+    public void end(boolean interrupted) {
+        swerveSub.drive(0, 0, 0, false, 0, 0);
     }
 
     @Override

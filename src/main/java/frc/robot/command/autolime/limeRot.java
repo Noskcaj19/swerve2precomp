@@ -22,12 +22,16 @@ public class limeRot extends Command {
 
     @Override
     public void execute() {
-        if (limelightHelpers.getTV("")) {
-            double rotOut = turnPID.calculate(limelightHelpers.getTX(""));
+        if (LimelightHelpers.getTV("")) {
+            double rotOut = turnPID.calculate(LimelightHelpers.getTX(""));
 
             rotOut = MathUtil.clamp(rotOut, -0.2, 0.2);
             swerveSub.drive(0, 0, rotOut, false);
         }
+    }
 
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

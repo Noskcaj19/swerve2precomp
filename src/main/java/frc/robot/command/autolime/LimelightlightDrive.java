@@ -16,7 +16,7 @@ public class LimelightlightDrive extends Command {
 
     private SwerveSubsystem swerveSub;
     private ProfiledPIDController xPID;
-    private ProfiledPIDController stancePID;
+    private ProfiledPIDController distancePID;
     boolean turnOff = false;
 
     final double getZontal() {
@@ -42,12 +42,12 @@ public class LimelightlightDrive extends Command {
         this.swerveSub = swerveSub;
         xPID = new ProfiledPIDController(1.1, 0, 0,
                 new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
-        stancePID = new ProfiledPIDController(1.1, 0, 0,
+        distancePID = new ProfiledPIDController(1.1, 0, 0,
                 new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
 
         // the robot cant like run into the limelight he needs to be close but not too
         // close omg im gonna die
-        stancePID.setGoal(new State(2, 0));
+        distancePID.setGoal(new State(2, 0));
 
     }
 
@@ -57,10 +57,10 @@ public class LimelightlightDrive extends Command {
 
             double xOff = xPID.calculate(getZontal());
 
-            double yOff = -stancePID.calculate(getSpace(2));
+            double yOff = -distancePID.calculate(getSpace(2));
             // figure out how to use an array, which value of the array am i using??
 
-            double rot = -stancePID.calculate(getSpace(4));
+            double rot = -distancePID.calculate(getSpace(4));
 
             // how do i set a different goal for the distance
 
