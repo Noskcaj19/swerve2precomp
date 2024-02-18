@@ -6,6 +6,7 @@ import frc.robot.subsytems.Shooter;
 
 public class DefaultShooter extends Command {
 
+    
     private Joystick joy;
     private Shooter shooterSub;
 
@@ -20,7 +21,7 @@ public class DefaultShooter extends Command {
         // align to theeuuuuuhhhhhh amp
         if (joy.getRawButtonPressed(0)) {
             // auto rotation (accpted apriltags ?)
-            shooterSub.setAmpSpeed();
+            shooterSub.shootAmp();
         }
         if (joy.getRawButtonReleased(0)) {
             // go back to manual drive

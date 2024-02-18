@@ -49,14 +49,12 @@ public class RobotContainer {
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
   private final Move intakeTransport = new Move(mouth, primaryJoy);
   private final DefaultClimb climbCommand = new DefaultClimb(SecondJoy, Arms);
-  // :)
 
   public RobotContainer() {
     swerveSub.setDefaultCommand(defaultSwerve);
     configureBindings();
 
     Shooter shooterSub = new Shooter();
-    AutoDrive step = new AutoDrive(swerveSub);
     // push commands to pathweaver auto
     NamedCommands.registerCommand("drive", step);
 

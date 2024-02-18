@@ -38,7 +38,7 @@ public class SmartAim extends Command {
         // horizontal offset
     }
 
-    inal double getSpace(int index) {
+    final double getSpace(int index) {
         return (LimelightHelpers.getTargetPose_RobotSpace("")[index]);
         // return (x.getDouble(160)/160)-1;
         // whatever the distance is
@@ -68,7 +68,7 @@ public class SmartAim extends Command {
         if(primaryJoy.getRawButton(10)){
         if (LimelightHelpers.getTV("")) {
             double tagID = LimelightHelpers.getFiducialID("");
-            if (tagID = "amp") {
+            if (tagID == "amp") {
                 
                 distancePID.setGoal(new State(2, 0));
 
@@ -78,10 +78,10 @@ public class SmartAim extends Command {
                 swerveSub.drive(yOff, xOff, 0, false);
 
                 if(getZontal() < 0.08){
-                    shoot.setAmpSpeed();
+                    shoot.shootAmp();
                 }
             }
-            else if(tagID = "speaker"){
+            else if(tagID == "speaker"){
                 shoot.setSpeakerSpeed();
                 distancePID.setGoal(new State(3,0));
 
@@ -91,7 +91,7 @@ public class SmartAim extends Command {
                 swerveSub.drive(yOff, xOff, 0, false);
 
                 if(getZontal() < 0.08){
-                    shoot.setAmpSpeed();
+                    shoot.shootAmp();
                 }
             }
         }

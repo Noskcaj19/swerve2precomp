@@ -12,7 +12,6 @@ public class DefaultSwerve extends Command {
     private SwerveSubsystem swerveSub;
     Boolean slow = false;
 
-
     public DefaultSwerve(Joystick joy, SwerveSubsystem swerveSub) {
 
         addRequirements(swerveSub);
