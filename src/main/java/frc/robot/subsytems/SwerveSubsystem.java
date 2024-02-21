@@ -33,8 +33,8 @@ public class SwerveSubsystem extends SubsystemBase {
     private final Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
     private final Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
-    private final SwerveModule fLSwerve = new SwerveModule(15, 14, 20, true, true, -0.115);
-    private final SwerveModule fRSwerve = new SwerveModule(13, 12, 19, true, true, 0.051);
+    private final SwerveModule fLSwerve = new SwerveModule(15, 14, 20, false, true, -0.115);
+    private final SwerveModule fRSwerve = new SwerveModule(13, 12, 19, false, true, 0.051);
     private final SwerveModule bLSwerve = new SwerveModule(17, 16, 21, true, true, -0.234);
     private final SwerveModule bRSwerve = new SwerveModule(11, 10, 18, true, true, -0.287);
 

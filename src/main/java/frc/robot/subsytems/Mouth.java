@@ -1,5 +1,8 @@
 package frc.robot.subsytems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -12,9 +15,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Mouth extends SubsystemBase {
 
-    private CANSparkMax intakeOne = new CANSparkMax(0, MotorType.kBrushed);
-    private CANSparkMax intakeTwo = new CANSparkMax(0, MotorType.kBrushed);
-    private CANSparkMax transport = new CANSparkMax(0, MotorType.kBrushed);
+    // private CANSparkMax intakeOne = new CANSparkMax(0, MotorType.kBrushed);
+    // private CANSparkMax intakeTwo = new CANSparkMax(0, MotorType.kBrushed);
+    // private CANSparkMax transport = new CANSparkMax(0, MotorType.kBrushed);
+
+    VictorSPX intakeOne = new VictorSPX(8);
+    VictorSPX intakeTwo = new VictorSPX(9);
+    TalonSRX transport = new TalonSRX(12);
 
     // motors that first grab the note under the bumber
     // kind of like beatle jaws
@@ -35,15 +42,15 @@ public class Mouth extends SubsystemBase {
         // um uh idk
         // set each motor to go inwards towards center of robot
 
-        intakeOne.set(0.5);
-        intakeTwo.set(0.5);
-        transport.set(0.5);
+        intakeOne.set(ControlMode.PercentOutput, 0.5);
+        intakeTwo.set(ControlMode.PercentOutput, 0.5);
+        transport.set(ControlMode.PercentOutput, 0.5);
     }
 
     public void sing(boolean on) {
         // set all the values of suck to negative???? maybe???? idk???
-        intakeOne.set(0.5);
-        intakeTwo.set(0.5);
-        transport.set(0.5);
+        intakeOne.set(ControlMode.PercentOutput, 0.5);
+        intakeTwo.set(ControlMode.PercentOutput, 0.5);
+        transport.set(ControlMode.PercentOutput, 0.5);
     }
 }
