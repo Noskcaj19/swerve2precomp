@@ -1,6 +1,7 @@
 package frc.robot.command.autolime;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.LimelightHelpers;
 import frc.robot.subsytems.Shooter;
 
 public class AutoShoot extends Command {
@@ -13,9 +14,21 @@ public class AutoShoot extends Command {
 
     @Override
     public void execute() {
-        shootSub.setAmpSpeed();
+        double tagID = LimelightHelpers.getFiducialID("");
+        if(tagID == amp){
+            shootSub.shootAmp();
+        }
+        else if(tagID = speaker){
+            shootSub.shootSpeaker();
+        }
     }
 
+    @Override
+    public void end(boolean interrupted){
+        
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

@@ -79,4 +79,6 @@ public class RobotContainer {
       };
     }
   }
+
+//we want an auto that drives a distance, does auto aim, auto shoots
 }
