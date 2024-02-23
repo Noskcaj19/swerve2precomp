@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix6.BaseStatusSignal;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -19,11 +20,14 @@ public class Shooter extends SubsystemBase {
 
     // motor
     // to be quite honest i dunnoi what goe s to which motor controller
-    private final TalonSRX shooterOne = new TalonSRX(10);
-    private final TalonSRX shooterTwo = new TalonSRX(11);
+    private TalonSRX shooterOne = new TalonSRX(10);
+    private TalonSRX shooterTwo = new TalonSRX(11);
     // private final TalonSRX ampDeflector = new TalonSRX(0);
     // private final CANcoder deflectorEncoder = new CANcoder(0);
     private double ampSet;
+    
+    // shooterOne.setUpdateFrequency(200);
+    //set the update frequency
 
     
     
@@ -69,9 +73,20 @@ public class Shooter extends SubsystemBase {
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .0);
     }
 
+    public double getMotorSpeed(){
+        return shooterOne.getActiveTrajectoryVelocity();
+        //return motor speed
+    }
+
+    public double getRotations(){
+        //return rotations of the shooter wheel to use in auto
+    }
+
     @Override
     public void periodic() {
         // ampSet = deflectorPID.calculate(deflectorEncoder.getAbsolutePosition().getValueAsDouble());
+        
+        //m
     }
 
 }

@@ -9,7 +9,6 @@ public class Move extends Command {
 
     private final Joystick primaryJoystick;
     Mouth mouth = new Mouth();
-    private boolean status = false;
 
     public Move(Mouth mouth, Joystick firstJoy) {
 
@@ -25,15 +24,13 @@ public class Move extends Command {
         // TODO Auto-generated method stub
 
         if (primaryJoystick.getRawButtonPressed(6)) {
-            status = !status;
-            mouth.eat(status);
+            mouth.eat();
         }
         if (primaryJoystick.getRawButtonReleased(6)){
             mouth.intakeOff();
         }
         if (primaryJoystick.getRawButton(4)) {
-            status = !status;
-            mouth.sing(status);
+            mouth.sing();
         }
         if(primaryJoystick.getRawButtonReleased(4)){
             mouth.intakeOff();

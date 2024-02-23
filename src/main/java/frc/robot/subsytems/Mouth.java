@@ -39,7 +39,7 @@ public class Mouth extends SubsystemBase {
     // im so tired
     // eat takes in the note
     // it intakes it
-    public void eat(boolean on) {
+    public void eat() {
         // um uh idk
         // set each motor to go inwards towards center of robot
 
@@ -48,7 +48,7 @@ public class Mouth extends SubsystemBase {
         transport.set(ControlMode.PercentOutput, 0.5);
     }
 
-    public void sing(boolean on) {
+    public void sing() {
         // set all the values of suck to negative???? maybe???? idk???
         intakeOne.set(ControlMode.PercentOutput, -0.5);
         intakeTwo.set(ControlMode.PercentOutput, 0.5);

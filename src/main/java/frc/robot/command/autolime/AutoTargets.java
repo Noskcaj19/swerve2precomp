@@ -9,6 +9,7 @@ public class AutoTargets extends Command {
         this.choice = choice;
     }
 
+//so theoretically with this we can use it to define a point on the field we want to go to, speaker or the amp so we can use this in auto??
 
     @Override
     public void initialize(){
@@ -16,7 +17,9 @@ public class AutoTargets extends Command {
         if(choice == 1){
 
         }
-        else if(choice == 2){}
+        else if(choice == 2){
+            
+        }
     }
 
     @Override
