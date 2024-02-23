@@ -65,7 +65,9 @@ public class AutoTargets extends Command {
         // swerveSub.drive(speed, speed, choice, isScheduled());
         //pid controllers calculate their respective values then we put them in the drive function
         //not sure if we even need an end function
-        var pidX = xPID.calculate(choice)
+        var pidX = xPID.calculate(goalPos.getX());
+        var pidY = xPID.calculate(goalPos.getY());
+        swerveSub.drive(0,0,0,false, pidX, pidY );
     }
 
     @Override
