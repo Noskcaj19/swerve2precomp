@@ -19,10 +19,10 @@ public class Shooter extends SubsystemBase {
 
     // motor
     // to be quite honest i dunnoi what goe s to which motor controller
-    private final TalonSRX shooterOne = new TalonSRX(0);
-    private final TalonSRX shooterTwo = new TalonSRX(0);
-    private final TalonSRX ampDeflector = new TalonSRX(0);
-    private final CANcoder deflectorEncoder = new CANcoder(0);
+    private final TalonSRX shooterOne = new TalonSRX(10);
+    private final TalonSRX shooterTwo = new TalonSRX(11);
+    // private final TalonSRX ampDeflector = new TalonSRX(0);
+    // private final CANcoder deflectorEncoder = new CANcoder(0);
     private double ampSet;
 
     
@@ -44,8 +44,8 @@ public class Shooter extends SubsystemBase {
 
         //deflectorPID increments the deflector motor until the encoder value = the goal 
         // ampDeflector.set(TalonSRXControlMode.PercentOutput, deflectorPID.calculate(ampEncoder));
-        ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
-        shooterOne.set(TalonSRXControlMode.PercentOutput, .5);
+        // ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
+        shooterOne.set(TalonSRXControlMode.PercentOutput, -.5);
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .5);
         // whatever
     }
@@ -58,18 +58,20 @@ public class Shooter extends SubsystemBase {
         
         //deflectorPID increments the deflector motor until the encoder value = the goal 
         // ampDeflector.set(TalonSRXControlMode.PercentOutput, deflectorPID.calculate(ampEncoder));
-        ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
-        shooterOne.set(TalonSRXControlMode.PercentOutput, .8);
+        // ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
+        shooterOne.set(TalonSRXControlMode.PercentOutput, -.8);
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .8);
     }
 
     public void turnOff() {
 
+        shooterOne.set(TalonSRXControlMode.PercentOutput, .0);
+        shooterTwo.set(TalonSRXControlMode.PercentOutput, .0);
     }
 
     @Override
     public void periodic() {
-        ampSet = deflectorPID.calculate(deflectorEncoder.getAbsolutePosition().getValueAsDouble());
+        // ampSet = deflectorPID.calculate(deflectorEncoder.getAbsolutePosition().getValueAsDouble());
     }
 
 }

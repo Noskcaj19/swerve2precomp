@@ -51,11 +51,13 @@ public class PIDAutodrive extends Command {
         swerveSub.drive(0, 0, 0, false, 0, 0);
     }
 
-    @Override
-    public boolean isFinished() {
+    // @Override
+    // public boolean isFinished() {
 
-        var dist = swerveSub.getPose().relativeTo(startPosition).getTranslation().minus(point).getDistance(point);
-        return (;
-    }
+    //     var dist = swerveSub.getPose().relativeTo(startPosition).getTranslation().minus(point).getDistance(point);
 
-}
+    //     if( > dist)
+    //     return false;
+    // }
+
+}//idk anymore

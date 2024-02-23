@@ -32,7 +32,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 
 public class RobotContainer {
 
-  private final SendableChooser<Command> autoChooser;
+  private SendableChooser<Command> autoChooser;
   private final Robot robot = new Robot();
 
   // controllers
@@ -43,35 +43,40 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
   private final Mouth mouth = new Mouth();
   private final Arms Arms = new Arms();
+  private final Shooter Shooter = new Shooter();
   // private final Shooter shooterSub = new Shooter();
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
   private final Move intakeTransport = new Move(mouth, primaryJoy);
   private final DefaultClimb climbCommand = new DefaultClimb(SecondJoy, Arms);
+  private final DefaultShooter shootCommand = new DefaultShooter(primaryJoy, Shooter);
 
   public RobotContainer() {
     swerveSub.setDefaultCommand(defaultSwerve);
+    Shooter.setDefaultCommand(shootCommand);
+    mouth.setDefaultCommand(intakeTransport);
     configureBindings();
 
-    Shooter shooterSub = new Shooter();
+    // Shooter shooterSub = new Shooter();
     // push commands to pathweaver auto
-    NamedCommands.registerCommand("drive", step);
+    // NamedCommands.registerCommand("drive", step);
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    // autoChooser = AutoBuilder.buildAutoChooser();
 
-    Shuffleboard.getTab("autoChooser").add(autoChooser);
+    // Shuffleboard.getTab("autoChooser").add(autoChooser);
 
   }
 
   private void configureBindings() {
     new JoystickButton(primaryJoy, 7).whileTrue(new LimelightlightDrive(swerveSub));
-    new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New Auto"));
+    // new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New Auto"));
   }
 
   public Command getAutonomousCommand() {
-    var command = autoChooser.getSelected();
+    // var command = autoChooser.getSelected();
 
+    Command command = null;
     if (command != null) {
       return command;
     } else {

@@ -23,6 +23,7 @@ public class Mouth extends SubsystemBase {
     VictorSPX intakeTwo = new VictorSPX(9);
     TalonSRX transport = new TalonSRX(12);
 
+
     // motors that first grab the note under the bumber
     // kind of like beatle jaws
     public Mouth() {
@@ -43,14 +44,20 @@ public class Mouth extends SubsystemBase {
         // set each motor to go inwards towards center of robot
 
         intakeOne.set(ControlMode.PercentOutput, 0.5);
-        intakeTwo.set(ControlMode.PercentOutput, 0.5);
+        intakeTwo.set(ControlMode.PercentOutput, -0.5);
         transport.set(ControlMode.PercentOutput, 0.5);
     }
 
     public void sing(boolean on) {
         // set all the values of suck to negative???? maybe???? idk???
-        intakeOne.set(ControlMode.PercentOutput, 0.5);
+        intakeOne.set(ControlMode.PercentOutput, -0.5);
         intakeTwo.set(ControlMode.PercentOutput, 0.5);
-        transport.set(ControlMode.PercentOutput, 0.5);
+        transport.set(ControlMode.PercentOutput, -0.5);
+    }
+
+    public void intakeOff(){
+        intakeOne.set(ControlMode.PercentOutput, 0);
+        intakeTwo.set(ControlMode.PercentOutput, 0);
+        transport.set(ControlMode.PercentOutput, 0);
     }
 }

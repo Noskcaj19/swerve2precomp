@@ -13,6 +13,7 @@ public class Move extends Command {
 
     public Move(Mouth mouth, Joystick firstJoy) {
 
+        addRequirements(mouth);
         this.primaryJoystick = firstJoy;
         this.mouth = mouth;
     }
@@ -23,15 +24,21 @@ public class Move extends Command {
     public void execute() {
         // TODO Auto-generated method stub
 
-        if (primaryJoystick.getRawButton(6)) {
+        if (primaryJoystick.getRawButtonPressed(6)) {
             status = !status;
             mouth.eat(status);
         }
-
-        else if (primaryJoystick.getRawButton(4)) {
+        if (primaryJoystick.getRawButtonReleased(6)){
+            mouth.intakeOff();
+        }
+        if (primaryJoystick.getRawButton(4)) {
             status = !status;
             mouth.sing(status);
         }
+        if(primaryJoystick.getRawButtonReleased(4)){
+            mouth.intakeOff();
+        }
+        }
     }
 
-}
+

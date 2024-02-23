@@ -16,7 +16,7 @@ public class AutoTargets extends Command {
         if(choice == 1){
 
         }
-        else if(choice )
+        else if(choice == 2){}
     }
 
     @Override
@@ -36,4 +36,4 @@ public class AutoTargets extends Command {
 
 }
     
-}
+

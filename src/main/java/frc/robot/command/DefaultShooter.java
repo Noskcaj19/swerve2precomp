@@ -19,21 +19,21 @@ public class DefaultShooter extends Command {
     public void execute() {
 
         // align to theeuuuuuhhhhhh amp
-        if (joy.getRawButtonPressed(0)) {
+        if (joy.getRawButtonPressed(3)) {
             // auto rotation (accpted apriltags ?)
             shooterSub.shootAmp();
         }
-        if (joy.getRawButtonReleased(0)) {
+        if (joy.getRawButtonReleased(3)) {
             // go back to manual drive
             shooterSub.turnOff();
         }
 
         // again for speaker
-        if (joy.getRawButtonPressed(1)) {
+        if (joy.getRawButtonPressed(2)) {
             // auto rotation (accpted apriltags ?)
-            shooterSub.setSpeakerSpeed();
+            shooterSub.shootSpeaker();
         }
-        if (joy.getRawButtonReleased(1)) {
+        if (joy.getRawButtonReleased(2)) {
             // go back to manual drive
             shooterSub.turnOff();
         }
