@@ -34,7 +34,7 @@ public class DefaultSwerve extends Command {
         swerveSub.drive(
             (MathUtil.applyDeadband(-joy.getY(), 0.1)), 
             (MathUtil.applyDeadband(-joy.getX(), 0.1)), 
-            (MathUtil.applyDeadband(-joy.getTwist(), 0.1)),
+            (MathUtil.applyDeadband(joy.getTwist(), 0.1)),
             true);
 
         if (joy.getRawButton(5)) {

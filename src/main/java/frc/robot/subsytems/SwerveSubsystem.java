@@ -35,8 +35,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private final SwerveModule fLSwerve = new SwerveModule(15, 14, 20, false, true, -0.137);
     private final SwerveModule fRSwerve = new SwerveModule(13, 12, 19, false, true, 0);
-    private final SwerveModule bLSwerve = new SwerveModule(17, 16, 21, true, true, 0.172);
-    private final SwerveModule bRSwerve = new SwerveModule(11, 10, 18, true, true, -0.429);
+    private final SwerveModule bLSwerve = new SwerveModule(17, 16, 21, false, true, 0.172);
+    private final SwerveModule bRSwerve = new SwerveModule(11, 10, 18, false, true, -0.429);
 
     // naan bread
     Joystick primaryJoy = new Joystick(0);
