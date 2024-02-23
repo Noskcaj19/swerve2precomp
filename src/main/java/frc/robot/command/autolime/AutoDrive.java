@@ -8,15 +8,15 @@ import frc.robot.subsytems.SwerveModule;
 public class AutoDrive extends Command {
 
     private SwerveSubsystem swerveSub;
-    private double distance;
+    private double goalDistance;
     private double speed;
     private Translation2d startPosition;
 
-    public AutoDrive(SwerveSubsystem swerveSub, double distance, double speed) {
+    public AutoDrive(SwerveSubsystem swerveSub, double goalDistance, double speed) {
 
         addRequirements(swerveSub);
         this.swerveSub = swerveSub;
-        this.distance = distance;
+        this.goalDistance = goalDistance;
         this.speed = speed;
 
     }
@@ -46,12 +46,16 @@ public class AutoDrive extends Command {
         // TODO tweak for going backwards?
 
         double dist = swerveSub.getPose().getTranslation().getDistance(startPosition);
-        if (distance > 0 && distance < dist) {
+        if (goalDistance > 0 && goalDistance < dist) {
             return true;
 
         } else {
             return false;
         }
-
+//i finally get it now
+//goal distance is how far we want the robot to go
+//dist is how far we currently are away from the starting pos
+//if how far away we currently are is greater than how far away we want to be the auto is finished
+//:DDDD
     }
 }
