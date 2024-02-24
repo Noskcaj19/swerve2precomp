@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class Move extends Command {
+public class DefaultMouth extends Command {
 
     private final Joystick primaryJoystick;
     Mouth mouth = new Mouth();
 
-    public Move(Mouth mouth, Joystick firstJoy) {
+    public DefaultMouth(Mouth mouth, Joystick firstJoy) {
 
         addRequirements(mouth);
         this.primaryJoystick = firstJoy;

@@ -15,12 +15,16 @@ public class AutoShoot extends Command {
         this.intakeSub = intakeSub;
     }
 
-//plan: 
-//intakes note until limit switch is triggered or until certain number of rotations, 
-//spin up the shooter wheels, either in parallel with the intake or after the note has been eaten (limit switch is true)
-//once shooter wheels speed is the right amount for each target the intake will start again and send it into the wheels
-//in fact the 1st intake wheels dont need to move for this it can just be the transport
-//to make auto know when to end: we could 
+    // plan:
+    // intakes note until limit switch is triggered or until certain number of
+    // rotations,
+    // spin up the shooter wheels, either in parallel with the intake or after the
+    // note has been eaten (limit switch is true)
+    // once shooter wheels speed is the right amount for each target the intake will
+    // start again and send it into the wheels
+    // in fact the 1st intake wheels dont need to move for this it can just be the
+    // transport
+    // to make auto know when to end: we could
 
     @Override
     public void execute() {
@@ -51,7 +55,7 @@ public class AutoShoot extends Command {
     }
 
     @Override
-    public void end(boolean interrupted){
+    public void end(boolean interrupted) {
         shootSub.turnOff();
         intakeSub.intakeOff();
     }
@@ -59,7 +63,6 @@ public class AutoShoot extends Command {
     @Override
     public boolean isFinished() {
         return false;
-        if 
 
     }
 

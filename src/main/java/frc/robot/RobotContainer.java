@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.command.DefaultClimb;
 import frc.robot.command.DefaultShooter;
 import frc.robot.command.DefaultSwerve;
-import frc.robot.command.Move;
+import frc.robot.command.DefaultMouth;
 import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.LimelightlightDrive;
 import frc.robot.sds.ModuleConfiguration;
@@ -48,7 +48,7 @@ public class RobotContainer {
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
-  private final Move intakeTransport = new Move(mouth, primaryJoy);
+  private final DefaultMouth intakeTransport = new DefaultMouth(mouth, primaryJoy);
   private final DefaultClimb climbCommand = new DefaultClimb(SecondJoy, Arms);
   private final DefaultShooter shootCommand = new DefaultShooter(primaryJoy, Shooter);
 
@@ -59,6 +59,8 @@ public class RobotContainer {
     configureBindings();
 
     // Shooter shooterSub = new Shooter();
+    Shooter shooterSub = new Shooter();
+    AutoDrive step = new AutoDrive(swerveSub, 0, 0); // TODO
     // push commands to pathweaver auto
     // NamedCommands.registerCommand("drive", step);
 
@@ -70,7 +72,8 @@ public class RobotContainer {
 
   private void configureBindings() {
     new JoystickButton(primaryJoy, 7).whileTrue(new LimelightlightDrive(swerveSub));
-    // new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New Auto"));
+    // new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New
+    // Auto"));
   }
 
   public Command getAutonomousCommand() {
@@ -85,5 +88,5 @@ public class RobotContainer {
     }
   }
 
-//we want an auto that drives a distance, does auto aim, auto shoots
+  // we want an auto that drives a distance, does auto aim, auto shoots
 }

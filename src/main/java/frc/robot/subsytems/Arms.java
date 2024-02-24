@@ -34,10 +34,4 @@ public class Arms extends SubsystemBase {
     // }
     // }
 
-    // brb, checking on robot placement
-    // thats fine for npow though
-    // ah ok
-    // vnhdbvfhbvfh i hate vim bro
-    // i could make this just one method couldnt i
-
 }

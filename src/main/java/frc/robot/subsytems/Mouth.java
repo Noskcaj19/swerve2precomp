@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import au.grapplerobotics.LaserCan;
+
 //i dont understand im so tired
 //why is it deprecated
 //idk
@@ -23,6 +25,11 @@ public class Mouth extends SubsystemBase {
     VictorSPX intakeTwo = new VictorSPX(9);
     TalonSRX transport = new TalonSRX(12);
 
+    // laser
+    private LaserCan laser = new LaserCan(0);
+
+    // boolena
+    private boolean isTaking = true;
 
     // motors that first grab the note under the bumber
     // kind of like beatle jaws
@@ -39,7 +46,10 @@ public class Mouth extends SubsystemBase {
     // im so tired
     // eat takes in the note
     // it intakes it
+
     public void eat() {
+
+    public void eat(boolean on) {
         // um uh idk
         // set each motor to go inwards towards center of robot
 
@@ -55,9 +65,39 @@ public class Mouth extends SubsystemBase {
         transport.set(ControlMode.PercentOutput, -0.5);
     }
 
-    public void intakeOff(){
+    public void intakeOff() {
         intakeOne.set(ControlMode.PercentOutput, 0);
         intakeTwo.set(ControlMode.PercentOutput, 0);
         transport.set(ControlMode.PercentOutput, 0);
+    }
+
+    @Override
+    public void periodic() {
+        if (isTakinng) {
+            LaserCan.Measurement measurement = laser.getMeasurement();
+            if (measurement != null && measurement.status == laser.LASERCAN_STATUS_VALID_MEASUREMENT) {
+                if (measurement.distance_mm >= 250) {
+
+                    intakeOne.set(ControlMode.PercentOutput, .6);
+                    intakeTwo.set(ControlMode.PercentOutput, .7);
+                    transport.set(ControlMode.PercentOutput, 0.1);
+                }
+                if (measurement.distance_mm == 150) {
+
+                    intakeOne.set(ControlMode.PercentOutput, .6);
+                    intakeTwo.set(ControlMode.PercentOutput, .7);
+                    transport.set(ControlMode.PercentOutput, 0.1);
+
+                }
+                if (measurement.distance_mm < 5) {
+
+                    intakeOne.set(ControlMode.PercentOutput, .6);
+                    intakeTwo.set(ControlMode.PercentOutput, .7);
+                    transport.set(ControlMode.PercentOutput, 0.1);
+
+                }
+
+            }
+        }
     }
 }

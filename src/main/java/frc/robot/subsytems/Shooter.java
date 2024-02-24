@@ -25,29 +25,28 @@ public class Shooter extends SubsystemBase {
     // private final TalonSRX ampDeflector = new TalonSRX(0);
     // private final CANcoder deflectorEncoder = new CANcoder(0);
     private double ampSet;
-    
-    // shooterOne.setUpdateFrequency(200);
-    //set the update frequency
 
-    
-    
+    // shooterOne.setUpdateFrequency(200);
+    // set the update frequency
+
     ProfiledPIDController deflectorPID = new ProfiledPIDController(
-        1.1, 
-        0, 
-        0,
-        new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2)
-        );
-        
-    
+            1.1,
+            0,
+            0,
+            new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
+
     // moter
     public void shootAmp() {
 
         // deflectorEncoder.getAbsolutePosition().setUpdateFrequency(100, 250);
         deflectorPID.setGoal(0.5);
-        //goal is wherever the motor is when it is in the right position to deflect the note
+        // goal is wherever the motor is when it is in the right position to deflect the
+        // note
 
-        //deflectorPID increments the deflector motor until the encoder value = the goal 
-        // ampDeflector.set(TalonSRXControlMode.PercentOutput, deflectorPID.calculate(ampEncoder));
+        // deflectorPID increments the deflector motor until the encoder value = the
+        // goal
+        // ampDeflector.set(TalonSRXControlMode.PercentOutput,
+        // deflectorPID.calculate(ampEncoder));
         // ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
         shooterOne.set(TalonSRXControlMode.PercentOutput, -.5);
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .5);
@@ -56,12 +55,13 @@ public class Shooter extends SubsystemBase {
 
     public void shootSpeaker() {
         // etc
-        //sets deflect
+        // sets deflect
         deflectorPID.setGoal(0);
 
-        
-        //deflectorPID increments the deflector motor until the encoder value = the goal 
-        // ampDeflector.set(TalonSRXControlMode.PercentOutput, deflectorPID.calculate(ampEncoder));
+        // deflectorPID increments the deflector motor until the encoder value = the
+        // goal
+        // ampDeflector.set(TalonSRXControlMode.PercentOutput,
+        // deflectorPID.calculate(ampEncoder));
         // ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
         shooterOne.set(TalonSRXControlMode.PercentOutput, -.8);
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .8);
@@ -73,20 +73,21 @@ public class Shooter extends SubsystemBase {
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .0);
     }
 
-    public double getMotorSpeed(){
+    public double getMotorSpeed() {
         return shooterOne.getActiveTrajectoryVelocity();
-        //return motor speed
+        // return motor speed
     }
 
-    public double getRotations(){
-        //return rotations of the shooter wheel to use in auto
+    public double getRotations() {
+        // return rotations of the shooter wheel to use in auto
     }
 
     @Override
     public void periodic() {
-        // ampSet = deflectorPID.calculate(deflectorEncoder.getAbsolutePosition().getValueAsDouble());
-        
-        //m
+        // ampSet =
+        // deflectorPID.calculate(deflectorEncoder.getAbsolutePosition().getValueAsDouble());
+
+        // m
     }
 
 }
