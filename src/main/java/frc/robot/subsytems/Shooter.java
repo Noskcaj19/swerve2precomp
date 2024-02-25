@@ -80,6 +80,10 @@ public class Shooter extends SubsystemBase {
 
     public double getRotations() {
         // return rotations of the shooter wheel to use in auto
+        double rots;
+        rots = shooterOne.getSelectedSensorPosition();
+        return rots;
+
     }
 
     @Override

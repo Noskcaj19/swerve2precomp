@@ -6,7 +6,6 @@ import frc.robot.subsytems.Shooter;
 
 public class DefaultShooter extends Command {
 
-    
     private Joystick joy;
     private Shooter shooterSub;
 

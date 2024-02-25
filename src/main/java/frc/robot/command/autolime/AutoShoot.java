@@ -30,24 +30,24 @@ public class AutoShoot extends Command {
     public void execute() {
         double tagID = LimelightHelpers.getFiducialID("");
 
-        intakeSub.eat();
+        intakeSub.eat(true);
 
-        if(/*get limit switch*/){
+        if (true/* get limit switch */) {
             intakeSub.intakeOff();
         }
 
-            // if(/*tagID == amp*/){
-            //     shootSub.shootAmp();
-            // }
-            // else if(/*tagID = speaker*/){
-            //     shootSub.shootSpeaker();
-            // }
+        // if(/*tagID == amp*/){
+        // shootSub.shootAmp();
+        // }
+        // else if(/*tagID = speaker*/){
+        // shootSub.shootSpeaker();
+        // }
 
-        switch((int)tagID){
-            //first case would be april id that corresponds to amp
+        switch ((int) tagID) {
+            // first case would be april id that corresponds to amp
             case 1:
                 shootSub.shootAmp();
-            //second case would be april id that cooresponds to speaker
+                // second case would be april id that cooresponds to speaker
             case 2:
                 shootSub.shootSpeaker();
         }

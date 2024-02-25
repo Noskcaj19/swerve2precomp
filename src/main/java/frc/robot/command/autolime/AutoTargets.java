@@ -18,68 +18,70 @@ public class AutoTargets extends Command {
     private double yOffset;
     private ProfiledPIDController xPID;
     private ProfiledPIDController yPID;
-    public AutoTargets (int choice, SwerveSubsystem swerveSub, double speed){
+
+    public AutoTargets(int choice, SwerveSubsystem swerveSub, double speed) {
         this.choice = choice;
         this.swerveSub = swerveSub;
         this.speed = speed;
     }
 
-//get goal as translation2d
-//two translation2ds, one for where we are, and one for where we want to be (startPos and goalPos)
-//goal for amp and goal for speaker
-//xoffset is difference between goalPos.x() and startPos.x()
-//yoffset is difference between goalPos.y() and startPos.y()
-//figure out the translation2d values of amp and speaker
-//or look around until the limelight finds the id we are looking for then set that tag as the translation
-    public double getXOffset(){
+    // get goal as translation2d
+    // two translation2ds, one for where we are, and one for where we want to be
+    // (startPos and goalPos)
+    // goal for amp and goal for speaker
+    // xoffset is difference between goalPos.x() and startPos.x()
+    // yoffset is difference between goalPos.y() and startPos.y()
+    // figure out the translation2d values of amp and speaker
+    // or look around until the limelight finds the id we are looking for then set
+    // that tag as the translation
+    public double getXOffset() {
         xOffset = startPos.getDistance(goalPos);
         return xOffset;
     }
 
-    public double getYOffset(){
+    public double getYOffset() {
         yOffset = startPos.getDistance(goalPos);
         return yOffset;
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
 
         swerveSub.zeroYaw();
         startPos = swerveSub.getPose().getTranslation();
 
         xPID = new ProfiledPIDController(1.1, 0, 0,
-            new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
+                new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
         yPID = new ProfiledPIDController(xOffset, speed, choice, null);
 
-        //how to 
+        // how to
         // if(choice == 1){
 
         // }
         // else if(choice == 2){
-            
+
         // }
     }
 
     @Override
-    public void execute(){
+    public void execute() {
         // swerveSub.drive(speed, speed, choice, isScheduled());
-        //pid controllers calculate their respective values then we put them in the drive function
-        //not sure if we even need an end function
+        // pid controllers calculate their respective values then we put them in the
+        // drive function
+        // not sure if we even need an end function
         var pidX = xPID.calculate(goalPos.getX());
         var pidY = xPID.calculate(goalPos.getY());
-        swerveSub.drive(0,0,0,false, pidX, pidY );
+        swerveSub.drive(pidX, pidY, 0, false);
     }
 
     @Override
-    public void end(boolean interrupted){
+    public void end(boolean interrupted) {
 
     }
 
     @Override
-    public boolean isFinished(){
+    public boolean isFinished() {
         return false;
     }
 
 }
-    
-

@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import au.grapplerobotics.LaserCan;
 
 //i dont understand im so tired
@@ -26,16 +25,20 @@ public class Mouth extends SubsystemBase {
     TalonSRX transport = new TalonSRX(12);
 
     // laser
-    private LaserCan laser = new LaserCan(0);
+    private LaserCan laser = new LaserCan(44);
 
     // boolena
-    private boolean isTaking = true;
+    private boolean isTaking = false;
 
     // motors that first grab the note under the bumber
     // kind of like beatle jaws
     public Mouth() {
+        intakeTwo.setInverted(true);
     }
 
+    public void setTaking(boolean isTaking) {
+        this.isTaking = isTaking;
+    }
     // define more motors
     // however many are in the intake
     // because it is kind of sucking the note under the bumper the two jaws are
@@ -46,8 +49,6 @@ public class Mouth extends SubsystemBase {
     // im so tired
     // eat takes in the note
     // it intakes it
-
-    public void eat() {
 
     public void eat(boolean on) {
         // um uh idk
@@ -71,32 +72,41 @@ public class Mouth extends SubsystemBase {
         transport.set(ControlMode.PercentOutput, 0);
     }
 
+    public void printshtuff() {
+        LaserCan.Measurement m = laser.getMeasurement();
+        System.out
+                .println("mm:" + m.distance_mm + " valid " + (m.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT));
+    }
+
     @Override
     public void periodic() {
-        if (isTakinng) {
+        if (isTaking) {
             LaserCan.Measurement measurement = laser.getMeasurement();
-            if (measurement != null && measurement.status == laser.LASERCAN_STATUS_VALID_MEASUREMENT) {
-                if (measurement.distance_mm >= 250) {
+
+            if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
+                if (measurement.distance_mm < 235) {
 
                     intakeOne.set(ControlMode.PercentOutput, .6);
                     intakeTwo.set(ControlMode.PercentOutput, .7);
                     transport.set(ControlMode.PercentOutput, 0.1);
                 }
-                if (measurement.distance_mm == 150) {
+                if (measurement.distance_mm < 300) {
 
                     intakeOne.set(ControlMode.PercentOutput, .6);
                     intakeTwo.set(ControlMode.PercentOutput, .7);
                     transport.set(ControlMode.PercentOutput, 0.1);
-
                 }
-                if (measurement.distance_mm < 5) {
+                if (measurement.distance_mm > 490) {
 
                     intakeOne.set(ControlMode.PercentOutput, .6);
                     intakeTwo.set(ControlMode.PercentOutput, .7);
                     transport.set(ControlMode.PercentOutput, 0.1);
-
                 }
 
+            } else {
+                intakeOne.set(ControlMode.PercentOutput, .5);
+                intakeTwo.set(ControlMode.PercentOutput, 0.5);
+                transport.set(ControlMode.PercentOutput, .5);
             }
         }
     }

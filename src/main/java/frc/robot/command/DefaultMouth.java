@@ -22,20 +22,27 @@ public class DefaultMouth extends Command {
     @Override
     public void execute() {
         // TODO Auto-generated method stub
+        if (true) {
+            mouth.printshtuff();
+        }
+
+        if (primaryJoystick.getRawButton(12)) {
+            mouth.setTaking(true);
+        } else {
+            mouth.setTaking(false);
+        }
 
         if (primaryJoystick.getRawButtonPressed(6)) {
-            mouth.eat();
+            mouth.eat(true);
         }
-        if (primaryJoystick.getRawButtonReleased(6)){
+        if (primaryJoystick.getRawButtonReleased(6)) {
             mouth.intakeOff();
         }
         if (primaryJoystick.getRawButton(4)) {
             mouth.sing();
         }
-        if(primaryJoystick.getRawButtonReleased(4)){
+        if (primaryJoystick.getRawButtonReleased(4)) {
             mouth.intakeOff();
         }
-        }
     }
-
-
+}

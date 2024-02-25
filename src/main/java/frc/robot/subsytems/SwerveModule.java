@@ -111,8 +111,8 @@ public class SwerveModule {
                 absoluteEncoder.getAbsolutePosition().setUpdateFrequency(100, 250);
 
                 // #region Motor controller setup
-                driveMotor.setInverted(driveMotorInverted);
-                turningMotor.setInverted(turningMotorInverted);
+                // driveMotor.setInverted(driveMotorInverted);
+                // turningMotor.setInverted(turningMotorInverted);
 
                 turningMotor.setSmartCurrentLimit(20);
                 driveMotor.setSmartCurrentLimit(80);
@@ -207,11 +207,11 @@ public class SwerveModule {
                 // that
                 double adjustedReferenceAngleRadians = optimizedState.angle.getRadians() + turningEncoder.getPosition()
                                 - currentAngleRadiansMod;
-                        if (optimizedState.angle.getRadians() - currentAngleRadiansMod > Math.PI) {
-                                adjustedReferenceAngleRadians -= 2.0 * Math.PI;
-                        } else if (optimizedState.angle.getRadians() - currentAngleRadiansMod < -Math.PI) {
-                                adjustedReferenceAngleRadians += 2.0 * Math.PI;
-                        }
+                if (optimizedState.angle.getRadians() - currentAngleRadiansMod > Math.PI) {
+                        adjustedReferenceAngleRadians -= 2.0 * Math.PI;
+                } else if (optimizedState.angle.getRadians() - currentAngleRadiansMod < -Math.PI) {
+                        adjustedReferenceAngleRadians += 2.0 * Math.PI;
+                }
 
                 // pidController.setReference(0,ControlType.kPosition);
                 // pidController.setReference(state.angle.getRadians(), ControlType.kPosition);
