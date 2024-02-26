@@ -115,7 +115,7 @@ public class SwerveModule {
                 // turningMotor.setInverted(turningMotorInverted);
 
                 turningMotor.setSmartCurrentLimit(20);
-                driveMotor.setSmartCurrentLimit(80);
+                driveMotor.setSmartCurrentLimit(50);
 
                 driveMotor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus0, 100);
                 driveMotor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus1, 20);
@@ -184,7 +184,6 @@ public class SwerveModule {
                 SwerveModuleState state = desiredState;
 
                 var fff = feedforward.calculate(state.speedMetersPerSecond);
-                System.out.println(fff);
 
                 // Calculate the turning motor output from the turning PID controller.
                 driveMotor.setVoltage(

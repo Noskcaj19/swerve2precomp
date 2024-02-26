@@ -34,6 +34,11 @@ public class Arms extends SubsystemBase {
         }
     }
 
+    public void turnOff() {
+        arm1.set(TalonSRXControlMode.PercentOutput, 0);
+        arm2.set(TalonSRXControlMode.PercentOutput, 0);
+    }
+
     @Override
     public void periodic() {
 

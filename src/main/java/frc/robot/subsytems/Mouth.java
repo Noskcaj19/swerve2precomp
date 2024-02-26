@@ -3,8 +3,6 @@ package frc.robot.subsytems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 import au.grapplerobotics.LaserCan;
 
 //i dont understand im so tired
@@ -16,10 +14,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Mouth extends SubsystemBase {
 
-    // private CANSparkMax intakeOne = new CANSparkMax(0, MotorType.kBrushed);
-    // private CANSparkMax intakeTwo = new CANSparkMax(0, MotorType.kBrushed);
-    // private CANSparkMax transport = new CANSparkMax(0, MotorType.kBrushed);
-
     VictorSPX intakeOne = new VictorSPX(8);
     VictorSPX intakeTwo = new VictorSPX(9);
     TalonSRX transport = new TalonSRX(12);
@@ -27,36 +21,52 @@ public class Mouth extends SubsystemBase {
     // laser
     private LaserCan laser = new LaserCan(44);
 
-    // boolena
-    private boolean isTaking = false;
-
     // motors that first grab the note under the bumber
     // kind of like beatle jaws
     public Mouth() {
+        for (var ste : Thread.currentThread().getStackTrace()) {
+            System.out.println(ste);
+        }
+
         intakeTwo.setInverted(true);
     }
 
-    public void setTaking(boolean isTaking) {
-        this.isTaking = isTaking;
-    }
-    // define more motors
-    // however many are in the intake
-    // because it is kind of sucking the note under the bumper the two jaws are
-    // inverted versions of eachother
-    // to suck the note in : the right bumber spins clockwise and the left spins cc
-    // to spit it out that is reversed
+    // boolena
+    private boolean isTaking = false;
 
-    // im so tired
-    // eat takes in the note
-    // it intakes it
+    public boolean get() {
+        return isTaking;
+    }
+
+    public void smartIntake() {
+        isTaking = true;
+    }
+
+    public void stopSmIntake() {
+        isTaking = false;
+    }
+
+    private boolean isFeeding = false;
+
+    public boolean getFeeding() {
+        return isFeeding;
+    }
+
+    public void feedOn() {
+        isFeeding = true;
+    }
+
+    public void feedOff() {
+        isFeeding = false;
+    }
 
     public void eat(boolean on) {
         // um uh idk
         // set each motor to go inwards towards center of robot
 
-        intakeOne.set(ControlMode.PercentOutput, 0.5);
-        intakeTwo.set(ControlMode.PercentOutput, -0.5);
-        transport.set(ControlMode.PercentOutput, 0.5);
+        intakeOne.set(ControlMode.PercentOutput, 0.2);
+        intakeTwo.set(ControlMode.PercentOutput, 0.2);
+        transport.set(ControlMode.PercentOutput, 0.2);
     }
 
     public void sing() {
@@ -72,6 +82,10 @@ public class Mouth extends SubsystemBase {
         transport.set(ControlMode.PercentOutput, 0);
     }
 
+    public void feedToShooter() {
+        intakeOne.set(ControlMode.PercentOutput, 0.2);
+    }
+
     public void printshtuff() {
         LaserCan.Measurement m = laser.getMeasurement();
         System.out
@@ -80,34 +94,59 @@ public class Mouth extends SubsystemBase {
 
     @Override
     public void periodic() {
+        // intakeTwo.set(ControlMode.PercentOutput, .1);
+
         if (isTaking) {
             LaserCan.Measurement measurement = laser.getMeasurement();
 
             if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
-                if (measurement.distance_mm < 235) {
+                if (measurement.distance_mm < 295) {
 
-                    intakeOne.set(ControlMode.PercentOutput, .6);
-                    intakeTwo.set(ControlMode.PercentOutput, .7);
+                    System.out.println("1");
+                    intakeOne.set(ControlMode.PercentOutput, .0);
+                    intakeTwo.set(ControlMode.PercentOutput, .0);
+                    transport.set(ControlMode.PercentOutput, 0.0);
+                    return;
+                } else if (measurement.distance_mm < 370) {
+                    System.out.println("2");
+
+                    intakeOne.set(ControlMode.PercentOutput, .3);
+                    intakeTwo.set(ControlMode.PercentOutput, .45);
                     transport.set(ControlMode.PercentOutput, 0.1);
+                    return;
                 }
-                if (measurement.distance_mm < 300) {
-
-                    intakeOne.set(ControlMode.PercentOutput, .6);
-                    intakeTwo.set(ControlMode.PercentOutput, .7);
-                    transport.set(ControlMode.PercentOutput, 0.1);
-                }
-                if (measurement.distance_mm > 490) {
-
-                    intakeOne.set(ControlMode.PercentOutput, .6);
-                    intakeTwo.set(ControlMode.PercentOutput, .7);
-                    transport.set(ControlMode.PercentOutput, 0.1);
-                }
-
-            } else {
+                System.out.println("3");
                 intakeOne.set(ControlMode.PercentOutput, .5);
                 intakeTwo.set(ControlMode.PercentOutput, 0.5);
-                transport.set(ControlMode.PercentOutput, .5);
+                transport.set(ControlMode.PercentOutput, .7);
+                return;
+                // else if (measurement.distance_mm < 300) {
+
+                // intakeOne.set(ControlMode.PercentOutput, .3);
+                // intakeTwo.set(ControlMode.PercentOutput, .4);
+                // transport.set(ControlMode.PercentOutput, 0.1);
+                // }
+                // if (measurement.distance_mm > 490) {
+
+                // intakeOne.set(ControlMode.PercentOutput, .6);
+                // intakeTwo.set(ControlMode.PercentOutput, .7);
+                // transport.set(ControlMode.PercentOutput, 0.1);
+                // }
+
+            } else {
+
+                System.out.println("4");
+                intakeOne.set(ControlMode.PercentOutput, .5);
+                intakeTwo.set(ControlMode.PercentOutput, 0.5);
+                transport.set(ControlMode.PercentOutput, .7);
             }
+        } else if (isFeeding) {
+            transport.set(ControlMode.PercentOutput, .7);
+            intakeTwo.set(ControlMode.PercentOutput, 0.5);
+        } else {
+            intakeOne.set(ControlMode.PercentOutput, 0);
+            intakeTwo.set(ControlMode.PercentOutput, 0);
+            transport.set(ControlMode.PercentOutput, 0);
         }
     }
 }

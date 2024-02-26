@@ -27,19 +27,35 @@ public class DefaultSwerve extends Command {
     public void execute() {
 
         // swerve stuff goes here
-        //xspeed is xbox controller left joystick yspeed is also left joystick and rotation is right joystick
-        
-        //adding deadbands
-        
-        swerveSub.drive(
-            (MathUtil.applyDeadband(-joy.getY(), 0.1)), 
-            (MathUtil.applyDeadband(-joy.getX(), 0.1)), 
-            (MathUtil.applyDeadband(joy.getTwist(), 0.1)),
-            true);
+        // xspeed is xbox controller left joystick yspeed is also left joystick and
+        // rotation is right joystick
 
-        if (joy.getRawButton(5)) {
+        // adding deadbands
+
+        var xSpeed = (MathUtil.applyDeadband(-joy.getY(), 0.1));
+        var ySpeed = (MathUtil.applyDeadband(-joy.getX(), 0.1));
+        var rot = (MathUtil.applyDeadband(-joy.getTwist(), 0.1));
+
+        if (!joy.getTrigger()) {
+            xSpeed *= 0.5;
+            ySpeed *= 0.5;
+            rot *= 0.1;
+        } else {
+            rot *= 0.5;
+        }
+
+        if (joy.getRawButton(7)) {
+            xSpeed *= 0.75;
+            ySpeed *= 0.75;
+            rot *= 0.2;
+        }
+
+        if (joy.getRawButton(12)) {
             SwerveSubsystem.zeroYaw();
         }
+
+        swerveSub.drive(xSpeed, ySpeed, rot, !joy.getRawButton(2));
+
     }
 
     @Override

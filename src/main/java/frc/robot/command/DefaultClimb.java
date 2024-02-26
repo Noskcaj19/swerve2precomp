@@ -8,7 +8,7 @@ import frc.robot.subsytems.Arms;
 public class DefaultClimb extends Command {
 
     private Joystick joy;
-    private Arms climbSub = new Arms();
+    private Arms climbSub;
     boolean status = false;
 
     public DefaultClimb(Joystick inJoy, Arms climb) {
@@ -30,11 +30,14 @@ public class DefaultClimb extends Command {
         // var extendSet = -extendController + -clawSystem.getExtendSetPoint();
         // climbSub.set(extendSet);
 
-        if (joy.getRawButton(10)) {
+        if (joy.getPOV() == 0) {
             status = !status;
             climbSub.upDown(status);
-        } else if (joy.getRawButton(11)) {
+        }
+        if (joy.getPOV() == 180) {
             climbSub.upDown(status);
+        } else {
+            climbSub.turnOff();
         }
 
     }

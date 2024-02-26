@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DefaultMouth extends Command {
 
-    private final Joystick primaryJoystick;
-    Mouth mouth = new Mouth();
+    private final XboxController secondaryController;
+    Mouth mouth;
 
-    public DefaultMouth(Mouth mouth, Joystick firstJoy) {
+    public DefaultMouth(Mouth mouth, XboxController secondaryController) {
 
         addRequirements(mouth);
-        this.primaryJoystick = firstJoy;
+        this.secondaryController = secondaryController;
         this.mouth = mouth;
     }
 
@@ -23,26 +23,35 @@ public class DefaultMouth extends Command {
     public void execute() {
         // TODO Auto-generated method stub
         if (true) {
-            mouth.printshtuff();
+            // mouth.printshtuff();
         }
 
-        if (primaryJoystick.getRawButton(12)) {
-            mouth.setTaking(true);
+        if (secondaryController.getLeftBumper()) {
+            mouth.smartIntake();
         } else {
-            mouth.setTaking(false);
+            mouth.stopSmIntake();
         }
+        // if (primaryJoystick.getRawButtonPressed(12)) {
+        // mouth.smartIntake();
+        // // System.out.println(mouth.get());
+        // } else if (primaryJoystick.getRawButtonReleased(12)) {
+        // mouth.stopSmIntake();
+        // // System.out.println(mouth.get());
+        // }
 
-        if (primaryJoystick.getRawButtonPressed(6)) {
-            mouth.eat(true);
+        // System.out.println(mouth.getTaking());
+
+        if (secondaryController.getRightBumperPressed()) {
+            mouth.feedOn();
         }
-        if (primaryJoystick.getRawButtonReleased(6)) {
-            mouth.intakeOff();
+        if (secondaryController.getRightBumperReleased()) {
+            mouth.feedOff();
         }
-        if (primaryJoystick.getRawButton(4)) {
-            mouth.sing();
-        }
-        if (primaryJoystick.getRawButtonReleased(4)) {
-            mouth.intakeOff();
-        }
+        // if (primaryJoystick.getRawButton(4)) {
+        // mouth.sing();
+        // }
+        // if (primaryJoystick.getRawButtonReleased(4)) {
+        // mouth.intakeOff();
+        // }
     }
 }
