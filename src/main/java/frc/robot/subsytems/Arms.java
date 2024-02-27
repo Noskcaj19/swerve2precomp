@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arms extends SubsystemBase {
 
-    private TalonSRX arm1 = new TalonSRX(0);
-    private TalonSRX arm2 = new TalonSRX(0);
+    TalonSRX arm1 = new TalonSRX(27);
 
     private final PIDController extentionPID = new PIDController(0, 0, 0);
 
@@ -24,19 +23,24 @@ public class Arms extends SubsystemBase {
         extentionPID.setSetpoint(MathUtil.clamp(setpoint, 0, 0));
     }
 
-    public void upDown(boolean choice) {
-        if (choice) {
-            arm1.set(TalonSRXControlMode.PercentOutput, .5);
-            arm2.set(TalonSRXControlMode.PercentOutput, .5);
-        } else {
-            arm1.set(TalonSRXControlMode.PercentOutput, -.5);
-            arm2.set(TalonSRXControlMode.PercentOutput, -.5);
-        }
+    // public void upDown(boolean choice) {
+    // if (choice) {
+    // arm1.set(TalonSRXControlMode.PercentOutput, .5);
+    // } else {
+    // arm1.set(TalonSRXControlMode.PercentOutput, -.5);
+    // }
+    // }
+
+    public void armsUp() {
+        arm1.set(TalonSRXControlMode.PercentOutput, 0.8);
+    }
+
+    public void armsDown() {
+        arm1.set(TalonSRXControlMode.PercentOutput, -0.8);
     }
 
     public void turnOff() {
         arm1.set(TalonSRXControlMode.PercentOutput, 0);
-        arm2.set(TalonSRXControlMode.PercentOutput, 0);
     }
 
     @Override

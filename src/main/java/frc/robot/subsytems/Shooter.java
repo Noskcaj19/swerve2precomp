@@ -76,7 +76,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isToSpeakerSpeed() {
-        if (shooterOne.getSelectedSensorVelocity() > 2000 && shooterTwo.getSelectedSensorVelocity() > 2000) {
+        if (getSpeedOne() > 4100) {
             return true;
         } else {
             return false;
@@ -100,6 +100,16 @@ public class Shooter extends SubsystemBase {
         rots = shooterOne.getSelectedSensorPosition();
         return rots;
 
+    }
+
+    public double getSpeedOne() {
+        double stuff = (shooterOne.getSelectedSensorVelocity() * 600 / 4096 / 3);
+        return stuff;
+    }
+
+    public double getSpeedTwo() {
+        double stuff = (shooterTwo.getSelectedSensorVelocity() * 600 / 4096 / 3);
+        return stuff;
     }
 
     @Override

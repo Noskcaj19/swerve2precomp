@@ -4,12 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import au.grapplerobotics.LaserCan;
-
-//i dont understand im so tired
-//why is it deprecated
-//idk
-//someone make it stop
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Mouth extends SubsystemBase {
@@ -60,9 +54,7 @@ public class Mouth extends SubsystemBase {
         isFeeding = false;
     }
 
-    public void eat(boolean on) {
-        // um uh idk
-        // set each motor to go inwards towards center of robot
+    public void eat() {
 
         intakeOne.set(ControlMode.PercentOutput, 0.2);
         intakeTwo.set(ControlMode.PercentOutput, 0.2);
@@ -98,7 +90,9 @@ public class Mouth extends SubsystemBase {
 
         if (isTaking) {
             LaserCan.Measurement measurement = laser.getMeasurement();
-
+            if (measurement != null)
+                System.out.println("measurement:" + measurement.status + " valid "
+                        + (measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT));
             if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
                 if (measurement.distance_mm < 295) {
 
@@ -139,6 +133,7 @@ public class Mouth extends SubsystemBase {
                 intakeOne.set(ControlMode.PercentOutput, .5);
                 intakeTwo.set(ControlMode.PercentOutput, 0.5);
                 transport.set(ControlMode.PercentOutput, .7);
+
             }
         } else if (isFeeding) {
             transport.set(ControlMode.PercentOutput, .7);

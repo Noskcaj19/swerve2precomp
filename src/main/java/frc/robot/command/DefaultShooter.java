@@ -21,32 +21,36 @@ public class DefaultShooter extends Command {
 
     public void execute() {
 
+        // System.out.println("speed of one: " + shooterSub.getSpeedOne() + " speed of
+        // two: " + shooterSub.getSpeedTwo());
         // align to theeuuuuuhhhhhh amp
-        if (secondaryController.getAButtonPressed()) {
+        if (secondaryController.getAButton()) {
             // auto rotation (accpted apriltags ?)
             shooterSub.shootAmp();
 
             if (shooterSub.isToAmpSpeed()) {
-                intakeSub.feedToShooter();
+                intakeSub.feedOn();
             }
         }
         if (secondaryController.getAButtonReleased()) {
             // go back to manual drive
             shooterSub.turnOff();
+            intakeSub.feedOff();
         }
 
         // again for speaker
-        if (secondaryController.getYButtonPressed()) {
+        if (secondaryController.getYButton()) {
             // auto rotation (accpted apriltags ?)
             shooterSub.shootSpeaker();
 
             if (shooterSub.isToSpeakerSpeed()) {
-                intakeSub.feedToShooter();
+                intakeSub.feedOn();
             }
         }
         if (secondaryController.getYButtonReleased()) {
             // go back to manual drive
             shooterSub.turnOff();
+            intakeSub.feedOff();
         }
 
         // // auto-align

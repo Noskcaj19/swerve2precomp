@@ -11,8 +11,9 @@ public class DefaultClimb extends Command {
     private Arms climbSub;
     boolean status = false;
 
-    public DefaultClimb(Joystick inJoy, Arms climb) {
-        this.climbSub = climb;
+    public DefaultClimb(Joystick inJoy, Arms climbSub) {
+        addRequirements(climbSub);
+        this.climbSub = climbSub;
         this.joy = inJoy;
     }
 
@@ -30,16 +31,35 @@ public class DefaultClimb extends Command {
         // var extendSet = -extendController + -clawSystem.getExtendSetPoint();
         // climbSub.set(extendSet);
 
-        if (joy.getPOV() == 0) {
-            status = !status;
-            climbSub.upDown(status);
-        }
-        if (joy.getPOV() == 180) {
-            climbSub.upDown(status);
-        } else {
+        // if (joy.getPOV() == 0) {
+        // status = !status;
+        // climbSub.upDown(status);
+        // } else if (joy.getPOV() == 180) {
+        // climbSub.upDown(status);
+        // } else {
+        // climbSub.turnOff();
+        // }
+
+        // if (joy.getRawButtonPressed(5)) {
+        // status = !status;
+        // climbSub.upDown(status);
+        // } else if (joy.getRawButton(6)) {
+        // climbSub.upDown(status);
+        // } else {
+        // climbSub.turnOff();
+        // }
+
+        if (joy.getRawButtonPressed(9)) {
+            climbSub.armsUp();
+        } else if (joy.getRawButtonReleased(9)) {
             climbSub.turnOff();
         }
 
+        else if (joy.getRawButtonPressed(10)) {
+            climbSub.armsDown();
+        } else if (joy.getRawButtonReleased(10)) {
+            climbSub.turnOff();
+        }
     }
 
 }

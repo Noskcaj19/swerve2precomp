@@ -30,7 +30,7 @@ public class AutoLimeShoot extends Command {
     public void execute() {
         double tagID = LimelightHelpers.getFiducialID("");
 
-        intakeSub.eat(true);
+        intakeSub.eat();
 
         if (true/* get limit switch */) {
             intakeSub.intakeOff();

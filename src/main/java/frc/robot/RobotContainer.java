@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.command.DefaultClimb;
 import frc.robot.command.DefaultShooter;
@@ -57,7 +58,10 @@ public class RobotContainer {
     swerveSub.setDefaultCommand(defaultSwerve);
     shooter.setDefaultCommand(shootCommand);
     mouth.setDefaultCommand(intakeTransport);
+    Arms.setDefaultCommand(climbCommand);
     configureBindings();
+
+    autoChooser.addOption("NAME", new OneAutoToRuleThemAll(swerveSub, shooter, mouth));
 
     // Shooter shooterSub = new Shooter();
     // AutoDrive step = new AutoDrive(swerveSub, 0, 0); // TODO
@@ -77,15 +81,15 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // var command = autoChooser.getSelected();
+    var command = autoChooser.getSelected();
 
     // Command command = null;
-    // if (command != null) {
-    // return command;
-    // } else {
-    // return new Command() {
-    // };
-    return new OneAutoToRuleThemAll(swerveSub, shooter);
+    if (command != null) {
+      return command;
+    } else {
+      return new InstantCommand();
+    }
+    // return new OneAutoToRuleThemAll(swerveSub, shooter, mouth);
 
   }
 }
