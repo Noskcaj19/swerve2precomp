@@ -20,6 +20,7 @@ public class AutoShoot extends Command {
 
     @Override
     public void execute() {
+        // if (shootSub.has)
         shootSub.shootSpeaker();
         if (shootSub.isToSpeakerSpeed()) {
             intakeSub.feedOn();
@@ -28,8 +29,9 @@ public class AutoShoot extends Command {
         }
     }
 
-    // @Override
-    // public void end(){
-    // intakeSub.feedOff();
-    // }
+    @Override
+    public void end(boolean interrupted) {
+        intakeSub.feedOff();
+        shootSub.turnOff();
+    }
 }

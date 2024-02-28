@@ -35,7 +35,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 
 public class RobotContainer {
 
-  private SendableChooser<Command> autoChooser;
+  private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private final Robot robot = new Robot();
 
   // controllers
@@ -62,6 +62,7 @@ public class RobotContainer {
     configureBindings();
 
     autoChooser.addOption("NAME", new OneAutoToRuleThemAll(swerveSub, shooter, mouth));
+    Shuffleboard.getTab("Drive").add(autoChooser);
 
     // Shooter shooterSub = new Shooter();
     // AutoDrive step = new AutoDrive(swerveSub, 0, 0); // TODO
@@ -90,6 +91,9 @@ public class RobotContainer {
       return new InstantCommand();
     }
     // return new OneAutoToRuleThemAll(swerveSub, shooter, mouth);
+  }
 
+  public void resetFieldOrientation() {
+    swerveSub.zeroYaw();
   }
 }

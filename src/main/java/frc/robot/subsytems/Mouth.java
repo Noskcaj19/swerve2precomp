@@ -84,6 +84,16 @@ public class Mouth extends SubsystemBase {
                 .println("mm:" + m.distance_mm + " valid " + (m.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT));
     }
 
+    public boolean hasNoteLeft() {
+
+        LaserCan.Measurement m = laser.getMeasurement();
+        if (m == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public void periodic() {
         // intakeTwo.set(ControlMode.PercentOutput, .1);

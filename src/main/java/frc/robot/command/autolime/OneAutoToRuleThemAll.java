@@ -17,12 +17,11 @@ public class OneAutoToRuleThemAll extends SequentialCommandGroup {
         this.swerveSub = swerveSub;
         this.shooterSub = shooterSub;
         this.intakeSub = intakeSub;
-    }
-
-    public void firstAuto() {
         addCommands(
-                new AutoShoot(shooterSub, intakeSub).withTimeout(3), // does it have to get up to speed?
-                new AutoDrive(swerveSub, 0.1, 0.1).withTimeout(1));
+                new AutoShoot(shooterSub, intakeSub).until(intakeSub::hasNoteLeft)/* .withTimeout(2) */, // does it have
+                                                                                                         // to get up to
+                                                                                                         // speed?
+                new AutoDrive(swerveSub, 5, 0.2).withTimeout(2));
     }
 
 }

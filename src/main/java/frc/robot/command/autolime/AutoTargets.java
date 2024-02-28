@@ -47,7 +47,6 @@ public class AutoTargets extends Command {
     @Override
     public void initialize() {
 
-        swerveSub.zeroYaw();
         startPos = swerveSub.getPose().getTranslation();
 
         xPID = new ProfiledPIDController(1.1, 0, 0,
