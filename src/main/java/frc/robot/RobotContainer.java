@@ -4,13 +4,10 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.command.DefaultClimb;
@@ -20,8 +17,6 @@ import frc.robot.command.DefaultMouth;
 import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.LimelightlightDrive;
 import frc.robot.command.autolime.OneAutoToRuleThemAll;
-import frc.robot.sds.ModuleConfiguration;
-import frc.robot.sds.SdsModuleConfigurations;
 import frc.robot.subsytems.Arms;
 import frc.robot.subsytems.Mouth;
 import frc.robot.subsytems.Shooter;
