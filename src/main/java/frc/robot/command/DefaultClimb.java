@@ -49,15 +49,13 @@ public class DefaultClimb extends Command {
         // climbSub.turnOff();
         // }
 
-        if (joy.getRawButtonPressed(9)) {
+        if (joy.getPOV() == 180) {
             climbSub.armsUp();
-        } else if (joy.getRawButtonReleased(9)) {
-            climbSub.turnOff();
-        }
-
-        else if (joy.getRawButtonPressed(10)) {
+        } 
+        else if (joy.getPOV() == 0) {
             climbSub.armsDown();
-        } else if (joy.getRawButtonReleased(10)) {
+        }
+        else {
             climbSub.turnOff();
         }
     }
