@@ -78,6 +78,10 @@ public class Mouth extends SubsystemBase {
         intakeOne.set(ControlMode.PercentOutput, 0.2);
     }
 
+    public void feedBackwards() {
+        transport.set(ControlMode.PercentOutput, -0.2);
+    }
+
     public void printshtuff() {
         LaserCan.Measurement m = laser.getMeasurement();
         System.out

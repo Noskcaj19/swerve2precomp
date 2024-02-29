@@ -67,6 +67,11 @@ public class Shooter extends SubsystemBase {
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .8);
     }
 
+    public void reverseShooters() {
+        shooterOne.set (TalonSRXControlMode.PercentOutput, .5);
+        shooterTwo.set(TalonSRXControlMode.PercentOutput, -0.5);
+    }
+
     public boolean isToAmpSpeed() {
         if (shooterOne.getSelectedSensorVelocity() > 2000 && shooterTwo.getSelectedSensorVelocity() > 2000) {
             return true;

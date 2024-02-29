@@ -20,6 +20,7 @@ import frc.robot.command.DefaultMouth;
 import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.LimelightlightDrive;
 import frc.robot.command.autolime.OneAutoToRuleThemAll;
+import frc.robot.command.autolime.TwoAutoToRuleThemAll;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
 import frc.robot.subsytems.Arms;
@@ -62,7 +63,8 @@ public class RobotContainer {
     configureBindings();
 
     autoChooser.addOption("NAME", new OneAutoToRuleThemAll(swerveSub, shooter, mouth));
-    Shuffleboard.getTab("Drive").add(autoChooser);
+    autoChooser.addOption("rotate", new TwoAutoToRuleThemAll(swerveSub, shooter, mouth));
+    Shuffleboard.getTab("auto").add(autoChooser);
 
     // Shooter shooterSub = new Shooter();
     // AutoDrive step = new AutoDrive(swerveSub, 0, 0); // TODO
@@ -84,6 +86,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     var command = autoChooser.getSelected();
 
+
     // Command command = null;
     if (command != null) {
       return command;
@@ -93,7 +96,7 @@ public class RobotContainer {
     // return new OneAutoToRuleThemAll(swerveSub, shooter, mouth);
   }
 
-  public void resetFieldOrientation() {
-    swerveSub.zeroYaw();
-  }
+  // public void resetFieldOrientation() {
+  //   // swerveSub.zeroYaw();
+  // }
 }

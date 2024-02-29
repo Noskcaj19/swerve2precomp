@@ -1,35 +1,75 @@
-// package frc.robot.command.autolime;
+package frc.robot.command.autolime;
 
-// import edu.wpi.first.wpilibj2.command.Command;
+import com.kauailabs.navx.frc.AHRS;
 
-// public class AutoRotate extends Command(){
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsytems.SwerveSubsystem;
 
-// private SwerveSubsystem swerveSub;
-// private double goalTurn;
-// private double speed;
-// // private boolean inverted;
+public class AutoRotate extends Command {
 
-//     public AutoRotate(SwerveSubsystem swerveSub, double goalTurn, double speed, boolean inverted){
+private SwerveSubsystem swerveSub;
+private double goalYaw;
+private double turnSpeed;
 
-//         addRequirements(swerveSub);
-//         this.swerveSub =   swerveSub;
-//         this.speed = speed;
-//         this.goalTurn = goalTurn;
+// private boolean inverted;
 
-//     }
+    public AutoRotate(SwerveSubsystem swerveSub, double goalYaw, double turnSpeed){
 
-//     @Override
-//     public void initialize(){
-//         swerveSub.drive(speed, 0, goalTurn, false, 0, 0);
-//     }
+        addRequirements(swerveSub);
+        this.swerveSub = swerveSub;
+        this.turnSpeed = turnSpeed;
+        this.goalYaw = goalYaw;
 
-//     @Override
-//     public void end(boolean interrupted) {
-//         swerveSub.drive(0, 0, 0, false, 0, 0);
-//     }
+    }
 
-//     @Override
-//     public boolean isFinished(){
-//         //yeah i dunno
-//     }
-// }
+    @Override
+    public void initialize(){
+        if(goalYaw < 0){
+            turnSpeed = -turnSpeed;
+        }
+       
+    }
+    @Override
+    public void execute(){
+        swerveSub.drive(0, 0, turnSpeed, false, 0, 0);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        swerveSub.drive(0, 0, 0, false, 0, 0);
+    }
+
+    @Override
+    public boolean isFinished(){
+
+        double tempGY;
+        double tempCY;
+        double currentYaw = swerveSub.getYaw();
+        if(goalYaw < 0){
+            tempGY = -goalYaw;
+        }
+        else{
+            tempGY = goalYaw;
+        }
+        if(currentYaw < 0){
+            tempCY = -currentYaw;
+        }
+        else{
+            tempCY = currentYaw;
+        }
+        //yeah i dunno
+        // -90 -> 90
+        // -97 -> 97 
+        // 60 -> 60
+        // 97 > 90 -> true 
+        
+        if (tempGY <= tempCY){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
+    }
+}

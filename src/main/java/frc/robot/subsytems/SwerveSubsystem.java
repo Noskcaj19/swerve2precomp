@@ -119,6 +119,10 @@ public class SwerveSubsystem extends SubsystemBase {
                 return ometry.getPoseMeters();
         }
 
+        public double getYaw() {
+                return gyro.getYaw();
+        }
+
         public void resetOmetry(Pose2d pose) {
                 ometry.resetPosition(
                                 gyro.getRotation2d(),
