@@ -15,25 +15,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.command.autolime.OneAutoToRuleThemAll;
 
 public class Robot extends TimedRobot {
-  private Command autonomousCommand;
 
-  // private static final String kDefaultAuto = "Default";
-  // private static final String kCustomAuto = "dont choose btw";
-  // private static final String kCustomAuto2 = "dont choose btw 2";
-  // private String m_autoselected;
-  // private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private Command autonomousCommand;
   private RobotContainer robotContainer;
   // private DigitalInput dio = new DigitalInput(1);
 
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
-    // this.autonomousCommand = robotContainer.getAutonomousCommand();
-
-    // m_chooser.setDefaultOption("def", kDefaultAuto);
-    // m_chooser.addOption("dntchoose", kCustomAuto);
-    // m_chooser.addOption("2", kCustomAuto2);
-    // SmartDashboard.putData("Auto choices", m_chooser);
   }
 
   @Override
@@ -66,25 +55,6 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
     }
-
-    // if (autonomousCommand != null) {
-    // if (autonomousCommand.isFinished() == false) {
-    // switch (m_autoselected) {
-    // case kCustomAuto:
-    // ((OneAutoToRuleThemAll) autonomousCommand).firstAuto();
-    // autonomousCommand.schedule();
-    // break;
-    // case kCustomAuto2:
-    // ((OneAutoToRuleThemAll) autonomousCommand).firstAuto();
-    // autonomousCommand.schedule();
-    // break;
-    // case kDefaultAuto:
-    // default:
-    // ((OneAutoToRuleThemAll) autonomousCommand).firstAuto();
-    // break;
-    // }
-    // }
-    // }
   }
 
   @Override

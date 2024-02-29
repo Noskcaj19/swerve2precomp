@@ -49,17 +49,26 @@ public class DefaultClimb extends Command {
         // climbSub.turnOff();
         // }
 
-        if (joy.getRawButtonPressed(9)) {
-            climbSub.armsUp();
-        } else if (joy.getRawButtonReleased(9)) {
-            climbSub.turnOff();
-        }
+        // if (joy.getRawButtonPressed(9)) {
+        //     climbSub.armsUp();
+        // } else if (joy.getRawButtonReleased(9)) {
+        //     climbSub.turnOff();
+        // }
 
-        else if (joy.getRawButtonPressed(10)) {
+        // else if (joy.getRawButtonPressed(10)) {
+        //     climbSub.armsDown();
+        // } else if (joy.getRawButtonReleased(10)) {
+        //     climbSub.turnOff();
+        // }
+
+        if (joy.getPOV() == 0) {
+            climbSub.armsUp();
+        } else if (joy.getPOV() == 180) {
             climbSub.armsDown();
-        } else if (joy.getRawButtonReleased(10)) {
+        }else {
             climbSub.turnOff();
-        }
+        } 
+        
     }
 
 }
