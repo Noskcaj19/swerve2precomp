@@ -4,20 +4,22 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import au.grapplerobotics.LaserCan;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Mouth extends SubsystemBase {
+public class Intake extends SubsystemBase {
 
     VictorSPX intakeOne = new VictorSPX(8);
     VictorSPX intakeTwo = new VictorSPX(9);
     TalonSRX transport = new TalonSRX(12);
+    // private PIDController intakeP 
 
     // laser
     private LaserCan laser = new LaserCan(44);
 
     // motors that first grab the note under the bumber
     // kind of like beatle jaws
-    public Mouth() {
+    public Intake() {
         for (var ste : Thread.currentThread().getStackTrace()) {
             System.out.println(ste);
         }
@@ -109,7 +111,6 @@ public class Mouth extends SubsystemBase {
                         + (measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT));
             if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
                 if (measurement.distance_mm < 295) {
-
                     System.out.println("1");
                     intakeOne.set(ControlMode.PercentOutput, .0);
                     intakeTwo.set(ControlMode.PercentOutput, .0);

@@ -2,15 +2,15 @@ package frc.robot.command.autolime;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.LimelightHelpers;
-import frc.robot.subsytems.Mouth;
+import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
 
 public class AutoLimeShoot extends Command {
 
     private final Shooter shootSub;
-    private final Mouth intakeSub;
+    private final Intake intakeSub;
 
-    public AutoLimeShoot(Shooter shootSub, Mouth intakeSub) {
+    public AutoLimeShoot(Shooter shootSub, Intake intakeSub) {
         this.shootSub = shootSub;
         this.intakeSub = intakeSub;
     }

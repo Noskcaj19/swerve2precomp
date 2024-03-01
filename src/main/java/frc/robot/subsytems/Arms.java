@@ -36,7 +36,7 @@ public class Arms extends SubsystemBase {
     }
 
     public void armsDown() {
-        arm1.set(TalonSRXControlMode.PercentOutput, -0.8);
+        arm1.set(TalonSRXControlMode.PercentOutput, -0.99);
     }
 
     public void turnOff() {

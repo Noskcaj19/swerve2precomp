@@ -16,15 +16,15 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.command.DefaultClimb;
 import frc.robot.command.DefaultShooter;
 import frc.robot.command.DefaultSwerve;
-import frc.robot.command.DefaultMouth;
+import frc.robot.command.DefaultIntake;
+import frc.robot.command.autolime.AutoAlignTags;
 import frc.robot.command.autolime.AutoDrive;
-import frc.robot.command.autolime.LimelightlightDrive;
-import frc.robot.command.autolime.OneAutoToRuleThemAll;
-import frc.robot.command.autolime.TwoAutoToRuleThemAll;
+import frc.robot.command.autolime.autoSequences.OneAutoToRuleThemAll;
+import frc.robot.command.autolime.autoSequences.TwoAutoToRuleThemAll;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
 import frc.robot.subsytems.Arms;
-import frc.robot.subsytems.Mouth;
+import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
 import frc.robot.subsytems.SwerveSubsystem;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -45,13 +45,13 @@ public class RobotContainer {
 
   // TODO subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
-  private final Mouth mouth = new Mouth();
+  private final Intake mouth = new Intake();
   private final Arms Arms = new Arms();
   private final Shooter shooter = new Shooter();
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
-  private final DefaultMouth intakeTransport = new DefaultMouth(mouth, secondaryController);
+  private final DefaultIntake intakeTransport = new DefaultIntake(mouth, secondaryController);
   private final DefaultClimb climbCommand = new DefaultClimb(primaryJoy, Arms);
   private final DefaultShooter shootCommand = new DefaultShooter(secondaryController, shooter, mouth);
 
@@ -78,7 +78,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new JoystickButton(primaryJoy, 7).whileTrue(new LimelightlightDrive(swerveSub));
+    new JoystickButton(primaryJoy, 7).whileTrue(new AutoAlignTags(swerveSub, 1));
     // new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New
     // Auto"));
   }

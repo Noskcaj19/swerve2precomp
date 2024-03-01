@@ -29,7 +29,7 @@ public class AutoDrive extends Command {
     @Override
     public void execute() {
         // drive forqard
-        swerveSub.drive(speed, 0, 0, false, 0, 0);
+        swerveSub.drive(speed, 0, 0, false);
         // hird
 
     }

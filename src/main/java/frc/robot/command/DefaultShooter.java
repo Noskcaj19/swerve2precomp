@@ -3,16 +3,16 @@ package frc.robot.command;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsytems.Mouth;
+import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
 
 public class DefaultShooter extends Command {
 
     private XboxController secondaryController;
     private Shooter shooterSub;
-    private Mouth intakeSub;
+    private Intake intakeSub;
 
-    public DefaultShooter(XboxController secondController, Shooter shooterSub, Mouth intakeSub) {
+    public DefaultShooter(XboxController secondController, Shooter shooterSub, Intake intakeSub) {
         addRequirements(shooterSub);
         this.shooterSub = shooterSub;
         this.secondaryController = secondController;

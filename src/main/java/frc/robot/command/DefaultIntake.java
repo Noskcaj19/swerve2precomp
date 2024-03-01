@@ -1,16 +1,16 @@
 package frc.robot.command;
 
-import frc.robot.subsytems.Mouth;
+import frc.robot.subsytems.Intake;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class DefaultMouth extends Command {
+public class DefaultIntake extends Command {
 
     private final XboxController secondaryController;
-    Mouth mouth;
+    Intake mouth;
 
-    public DefaultMouth(Mouth mouth, XboxController secondaryController) {
+    public DefaultIntake(Intake mouth, XboxController secondaryController) {
 
         addRequirements(mouth);
         this.secondaryController = secondaryController;

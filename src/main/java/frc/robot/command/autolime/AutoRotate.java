@@ -27,6 +27,7 @@ private double turnSpeed;
         if(goalYaw < 0){
             turnSpeed = -turnSpeed;
         }
+        swerveSub.zeroYaw();
        
     }
     @Override
