@@ -7,13 +7,13 @@ import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
 import frc.robot.subsytems.SwerveSubsystem;
 
-public class OneAutoToRuleThemAll extends SequentialCommandGroup {
+public class CenterAuto extends SequentialCommandGroup {
 
     SwerveSubsystem swerveSub;
     Shooter shooterSub;
     Intake intakeSub;
 
-    public OneAutoToRuleThemAll(SwerveSubsystem swerveSub, Shooter shooterSub, Intake intakeSub) {
+    public CenterAuto(SwerveSubsystem swerveSub, Shooter shooterSub, Intake intakeSub) {
         addRequirements(swerveSub);
         addRequirements(shooterSub);
         this.swerveSub = swerveSub;

@@ -1,6 +1,8 @@
 
 package frc.robot.command.autolime.autoSequences;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.autolime.AutoAlignTags;
 import frc.robot.command.autolime.AutoDrive;
@@ -12,13 +14,13 @@ import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
 import frc.robot.subsytems.SwerveSubsystem;
 
-public class TwoAutoToRuleThemAll extends SequentialCommandGroup {
+public class LeftAuto extends SequentialCommandGroup {
 
     SwerveSubsystem swerveSub;
     Shooter shooterSub;
     Intake intakeSub;
 
-    public TwoAutoToRuleThemAll(SwerveSubsystem swerveSub, Shooter shooterSub, Intake intakeSub) {
+    public LeftAuto(SwerveSubsystem swerveSub, Shooter shooterSub, Intake intakeSub) {
         addRequirements(swerveSub);
         addRequirements(shooterSub);
         this.swerveSub = swerveSub;
@@ -34,8 +36,9 @@ public class TwoAutoToRuleThemAll extends SequentialCommandGroup {
                 // new AutoAlignTags(swerveSub, 1)
                 // new AutoIntake(in)
                 new AutoShoot(shooterSub, intakeSub).withTimeout(3),
-                new AutoDrive(swerveSub, 2, 0.2).withTimeout(3),
-                new AutoRotate(swerveSub, 45, 0.1).withTimeout(3)
+             //   new AutoDrive(swerveSub, 2, 0.2).withTimeout(3),
+                new AutoRotate(swerveSub, 45, 0.1).withTimeout(3),
+                new InstantCommand(()->{swerveSub.zeroYaw();},swerveSub)
         );
     }
 

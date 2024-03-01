@@ -60,9 +60,9 @@ public class AutoAlignTags extends Command {
 
     @Override
     public void execute() {
-        if (LimelightHelpers.getTV("limelight-back")) {
+        if (LimelightHelpers.getTV("back")) {
 
-            backTagID = LimelightHelpers.getFiducialID("limelight-back");
+            backTagID = LimelightHelpers.getFiducialID("back");
             switch(tagChoice) {
                 case 1:
                 //speaker center
@@ -203,13 +203,13 @@ public class AutoAlignTags extends Command {
                     }
                     
             }
-        } else if (LimelightHelpers.getTV("limelight-front")){
-            frontTagID = LimelightHelpers.getFiducialID("limelight-front");
+        } else if (LimelightHelpers.getTV("front")){
+            frontTagID = LimelightHelpers.getFiducialID("front");
             if(/*detectsnote*/true) {
                 double xOff = xPID.calculate(getZontal());
 
                 //
-                double yOff = -distancePID.calculate(getSpace(2));
+                double yOff = -distancePID.calculate(getSpace( 2));
                 // figure out how to use an array, which value of the array am i using??
 
                 double rot = -distancePID.calculate(getSpace(4));

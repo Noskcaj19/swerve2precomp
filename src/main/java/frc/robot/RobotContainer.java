@@ -19,8 +19,8 @@ import frc.robot.command.DefaultSwerve;
 import frc.robot.command.DefaultIntake;
 import frc.robot.command.autolime.AutoAlignTags;
 import frc.robot.command.autolime.AutoDrive;
-import frc.robot.command.autolime.autoSequences.OneAutoToRuleThemAll;
-import frc.robot.command.autolime.autoSequences.TwoAutoToRuleThemAll;
+import frc.robot.command.autolime.autoSequences.CenterAuto;
+import frc.robot.command.autolime.autoSequences.LeftAuto;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
 import frc.robot.subsytems.Arms;
@@ -62,8 +62,9 @@ public class RobotContainer {
     Arms.setDefaultCommand(climbCommand);
     configureBindings();
 
-    autoChooser.addOption("NAME", new OneAutoToRuleThemAll(swerveSub, shooter, mouth));
-    autoChooser.addOption("rotate", new TwoAutoToRuleThemAll(swerveSub, shooter, mouth));
+    autoChooser.addOption("center", new CenterAuto(swerveSub, shooter, mouth));
+    autoChooser.addOption("left", new LeftAuto(swerveSub, shooter, mouth));
+    // autoChooser.addOption("right",new ThreeAutoToRuleThemAll(swerveSub, shooter, mouth));
     Shuffleboard.getTab("auto").add(autoChooser);
 
     // Shooter shooterSub = new Shooter();
@@ -80,6 +81,8 @@ public class RobotContainer {
   private void configureBindings() {
     new JoystickButton(primaryJoy, 7).whileTrue(new AutoAlignTags(swerveSub, 1));
     // new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New
+    new JoystickButton(primaryJoy, 11).whileTrue(new PathPlannerAuto("RIGHTAUTO"));
+  
     // Auto"));
   }
 
