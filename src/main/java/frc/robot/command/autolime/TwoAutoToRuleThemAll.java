@@ -19,7 +19,7 @@ public class TwoAutoToRuleThemAll extends SequentialCommandGroup {
         this.shooterSub = shooterSub;
         this.intakeSub = intakeSub;
         addCommands(
-                new AutoRotate(swerveSub, 10, 0.1).withTimeout(3),
+                new AutoRotate(swerveSub, -10, 0.1).withTimeout(3),
                 new AutoDrive(swerveSub, 5, 0.2).withTimeout(2));
     }
 

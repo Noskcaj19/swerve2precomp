@@ -48,8 +48,8 @@ public class Shooter extends SubsystemBase {
         // ampDeflector.set(TalonSRXControlMode.PercentOutput,
         // deflectorPID.calculate(ampEncoder));
         // ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
-        shooterOne.set(TalonSRXControlMode.PercentOutput, -.35);
-        shooterTwo.set(TalonSRXControlMode.PercentOutput, .35);
+        shooterOne.set(TalonSRXControlMode.PercentOutput, -.65);
+        shooterTwo.set(TalonSRXControlMode.PercentOutput, .65);
         // whatever
     }
 
@@ -81,7 +81,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isToSpeakerSpeed() {
-        if (getSpeedOne() > 4100) {
+        if (getSpeedOne() > 4000) {
             return true;
         } else {
             return false;
