@@ -82,6 +82,7 @@ public class Intake extends SubsystemBase {
 
     public void feedBackwards() {
         transport.set(ControlMode.PercentOutput, -0.2);
+        intakeTwo.set(ControlMode.PercentOutput, .2);
     }
 
     public void printshtuff() {
@@ -110,7 +111,7 @@ public class Intake extends SubsystemBase {
                 System.out.println("measurement:" + measurement.status + " valid "
                         + (measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT));
             if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
-                if (measurement.distance_mm < 295) {
+                if (measurement.distance_mm < 300) {
                     System.out.println("1");
                     intakeOne.set(ControlMode.PercentOutput, .0);
                     intakeTwo.set(ControlMode.PercentOutput, .0);

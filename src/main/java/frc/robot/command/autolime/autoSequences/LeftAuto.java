@@ -36,8 +36,9 @@ public class LeftAuto extends SequentialCommandGroup {
                 // new AutoAlignTags(swerveSub, 1)
                 // new AutoIntake(in)
                 new AutoShoot(shooterSub, intakeSub).withTimeout(3),
-             //   new AutoDrive(swerveSub, 2, 0.2).withTimeout(3),
+                new AutoDrive(swerveSub, 2, 0.2).withTimeout(3),
                 new AutoRotate(swerveSub, 45, 0.1).withTimeout(3),
+                new AutoDrive(swerveSub, 5, 0.3), 
                 new InstantCommand(()->{swerveSub.zeroYaw();},swerveSub)
         );
     }
