@@ -3,7 +3,6 @@ package frc.robot.command;
 import frc.robot.subsytems.Intake;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.Joystick;
 
 public class DefaultIntake extends Command {
 
