@@ -81,7 +81,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isToSpeakerSpeed() {
-        if (getSpeedOne() > 4100) {
+        if (getSpeedOne() > 4400) {
             return true;
         } else {
             return false;//hello

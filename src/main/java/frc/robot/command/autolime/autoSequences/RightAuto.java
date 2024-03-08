@@ -18,9 +18,9 @@ public class RightAuto extends SequentialCommandGroup{
     public RightAuto (SwerveSubsystem swerveSub, Shooter shooterSub, Intake intakeSub){
         addCommands(
         new AutoShoot(shooterSub, intakeSub).withTimeout(3),
-        new AutoDrive(swerveSub, 1, 0.3).withTimeout(3),
-        new AutoRotate(swerveSub, -45, 0.3).withTimeout(3),
-        new AutoIntakeDrive(swerveSub, intakeSub, 2, 0.3).withTimeout(2)
+        new AutoDrive(swerveSub, 0.3, 0.2).withTimeout(3),
+        new AutoRotate(swerveSub, -25, 0.1).withTimeout(3),
+        new AutoIntakeDrive(swerveSub, intakeSub, 5, 0.3).withTimeout(2)
         );
     }
     

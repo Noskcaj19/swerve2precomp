@@ -1,7 +1,9 @@
 package frc.robot.command.autolime.autoSequences;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.autolime.AutoDrive;
+import frc.robot.command.autolime.AutoIntake;
 import frc.robot.command.autolime.AutoShoot;
 import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
@@ -20,10 +22,8 @@ public class CenterAuto extends SequentialCommandGroup {
         this.shooterSub = shooterSub;
         this.intakeSub = intakeSub;
         addCommands(
-                new AutoShoot(shooterSub, intakeSub).until(intakeSub::hasNoteLeft).withTimeout(2), // does it have
-                                                                                                         // to get up to
-                                                                                                         // speed?
-                new AutoDrive(swerveSub, 5, 0.2).withTimeout(2));
+                new AutoShoot(shooterSub, intakeSub).until(intakeSub::doesntHaveNote).withTimeout(2), 
+                new AutoDrive(swerveSub, 5, 0.2).withTimeout(0.01),
+                Commands.race(new AutoDrive(swerveSub, 1, 0.2), new AutoIntake(intakeSub)).until(intakeSub::hasNote));
     }
-
 }

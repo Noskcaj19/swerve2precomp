@@ -91,14 +91,17 @@ public class Intake extends SubsystemBase {
                 .println("mm:" + m.distance_mm + " valid " + (m.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT));
     }
 
-    public boolean hasNoteLeft() {
-
+    public boolean hasNote() {
         LaserCan.Measurement m = laser.getMeasurement();
-        if (m == null) {
+        if (m != null && m.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean doesntHaveNote() {
+        return !hasNote();
     }
 
     @Override

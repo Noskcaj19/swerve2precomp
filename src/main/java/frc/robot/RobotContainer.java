@@ -21,6 +21,7 @@ import frc.robot.command.autolime.AutoAlignTags;
 import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.autoSequences.CenterAuto;
 import frc.robot.command.autolime.autoSequences.LeftAuto;
+import frc.robot.command.autolime.autoSequences.RightAuto;
 import frc.robot.sds.ModuleConfiguration;
 import frc.robot.sds.SdsModuleConfigurations;
 import frc.robot.subsytems.Arms;
@@ -62,6 +63,7 @@ public class RobotContainer {
     Arms.setDefaultCommand(climbCommand);
     configureBindings();
 
+    autoChooser.addOption("right", new RightAuto(swerveSub, shooter, mouth));
     autoChooser.addOption("center", new CenterAuto(swerveSub, shooter, mouth));
     autoChooser.addOption("left", new LeftAuto(swerveSub, shooter, mouth));
     // autoChooser.addOption("right",new ThreeAutoToRuleThemAll(swerveSub, shooter, mouth));
