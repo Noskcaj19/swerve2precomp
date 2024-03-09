@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
 
-public class AutoShoot extends Command {
+public class AutoShootEndless extends Command{
 
     private Shooter shootSub;
     private Intake intakeSub;
 
-    public AutoShoot(Shooter shootSub, Intake intakeSub) {
+    public AutoShootEndless(Shooter shootSub, Intake intakeSub) {
 
         addRequirements(shootSub);
         addRequirements(intakeSub);
@@ -19,7 +19,7 @@ public class AutoShoot extends Command {
 
     @Override
     public void execute() {
-        // if (shootSub.has)
+
         shootSub.shootSpeaker();
         if (shootSub.isToSpeakerSpeed()) {
             intakeSub.feedOn();
@@ -27,10 +27,5 @@ public class AutoShoot extends Command {
             intakeSub.feedOff();
         }
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        intakeSub.feedOff();
-        shootSub.turnOff();
-    }
+    
 }

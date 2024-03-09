@@ -81,7 +81,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isToSpeakerSpeed() {
-        if (getSpeedOne() > 4400) {
+        if (getSpeedOne() > 4100) {
             return true;
         } else {
             return false;//hello
@@ -92,6 +92,7 @@ public class Shooter extends SubsystemBase {
 
         shooterOne.set(TalonSRXControlMode.PercentOutput, .0);
         shooterTwo.set(TalonSRXControlMode.PercentOutput, .0);
+
     }
 
     public double getMotorSpeed() {

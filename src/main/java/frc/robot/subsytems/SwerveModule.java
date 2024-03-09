@@ -31,7 +31,7 @@ public class SwerveModule {
 
         // defines motors for a singular module
 
-        private final CANSparkMax driveMotor;
+        public final CANSparkMax driveMotor;
         private final CANSparkMax turningMotor;
 
         // add encoder model later

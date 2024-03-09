@@ -6,6 +6,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -15,8 +16,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -39,6 +40,8 @@ public class SwerveSubsystem extends SubsystemBase {
         private final SwerveModule bRSwerve = new SwerveModule(11, 10, 18, true, true, -0.429);
 
         private static AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+        private LinearFilter hitFilter = LinearFilter.movingAverage(75);
 
         private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
                         frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
@@ -82,6 +85,18 @@ public class SwerveSubsystem extends SubsystemBase {
 
                 driveStates(swerveModuleStates2);
 
+        }
+
+        public double getForwardResistance(){
+                return hitFilter.calculate(fLSwerve.driveMotor.getOutputCurrent());
+        }
+
+        public boolean hasHitSomething(){
+                if(getForwardResistance() > 30){
+                        return true;
+                } else{
+                        return false;
+                }
         }
 
         SwerveDriveOdometry ometry = new SwerveDriveOdometry(
@@ -202,5 +217,6 @@ public class SwerveSubsystem extends SubsystemBase {
                                 },
                                 this // Reference to this subsystem to set requirements
                 );
+                Shuffleboard.getTab("Debug").addDouble("curent drive train draw", this::getForwardResistance);
         }
 }

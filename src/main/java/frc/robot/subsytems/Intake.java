@@ -93,7 +93,7 @@ public class Intake extends SubsystemBase {
 
     public boolean hasNote() {
         LaserCan.Measurement m = laser.getMeasurement();
-        if (m != null && m.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
+        if (m != null && m.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT && m.distance_mm < 245) {
             return true;
         } else {
             return false;
