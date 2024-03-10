@@ -12,11 +12,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Arms extends SubsystemBase {
 
     TalonSRX arm1 = new TalonSRX(27);
+    TalonSRX arm2 = new TalonSRX(3);
 
     private final PIDController extentionPID = new PIDController(0, 0, 0);
 
     // private
     public Arms() {
+        arm2.follow(arm1);
     }
 
     public void setArmLimitSetpoint(double setpoint) {
