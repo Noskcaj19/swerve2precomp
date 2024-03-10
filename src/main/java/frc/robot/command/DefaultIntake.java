@@ -1,6 +1,7 @@
 package frc.robot.command;
 
 import frc.robot.subsytems.Intake;
+import frc.robot.subsytems.Shooter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -8,8 +9,9 @@ public class DefaultIntake extends Command {
 
     private final XboxController secondaryController;
     Intake mouth;
+    Shooter shooterSub;
 
-    public DefaultIntake(Intake mouth, XboxController secondaryController) {
+    public DefaultIntake(Intake mouth, XboxController secondaryController, Shooter shooterSub) {
 
         addRequirements(mouth);
         this.secondaryController = secondaryController;
@@ -45,6 +47,7 @@ public class DefaultIntake extends Command {
         }
         if (secondaryController.getRightBumperReleased()) {
             mouth.feedOff();
+            shooterSub.turnOff();
         }
         // if (primaryJoystick.getRawButton(4)) {
         // mouth.sing();

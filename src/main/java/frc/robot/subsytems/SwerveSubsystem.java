@@ -41,7 +41,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         private static AHRS gyro = new AHRS(SPI.Port.kMXP);
 
-        private LinearFilter hitFilter = LinearFilter.movingAverage(75);
+        private LinearFilter hitFilter = LinearFilter.movingAverage(25);
 
         private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
                         frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
@@ -87,14 +87,19 @@ public class SwerveSubsystem extends SubsystemBase {
 
         }
 
-        public double getForwardResistance(){
-                return hitFilter.calculate(fLSwerve.driveMotor.getOutputCurrent());
+        public double getDriveMotorVelocity(){
+                return hitFilter.calculate(fLSwerve.driveMotor.getEncoder().getVelocity());
         }
 
+        boolean uh = false;
+
         public boolean hasHitSomething(){
-                if(getForwardResistance() > 30){
+                if(getDriveMotorVelocity() > 1.3){
+                        uh = true;
+                }
+                if(uh == true && Math.abs(getDriveMotorVelocity()) < 0.4){
                         return true;
-                } else{
+                } else {
                         return false;
                 }
         }
@@ -217,6 +222,6 @@ public class SwerveSubsystem extends SubsystemBase {
                                 },
                                 this // Reference to this subsystem to set requirements
                 );
-                Shuffleboard.getTab("Debug").addDouble("curent drive train draw", this::getForwardResistance);
+                Shuffleboard.getTab("Debug").addDouble("drive velocity", this::getDriveMotorVelocity);
         }
 }

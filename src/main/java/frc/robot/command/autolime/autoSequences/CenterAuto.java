@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.AutoIntake;
-import frc.robot.command.autolime.AutoShoot;
 import frc.robot.command.autolime.AutoShootSmart;
 import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;

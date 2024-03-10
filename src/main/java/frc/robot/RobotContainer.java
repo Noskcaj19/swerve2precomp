@@ -46,13 +46,13 @@ public class RobotContainer {
 
   // TODO subsystems
   private final SwerveSubsystem swerveSub = new SwerveSubsystem();
-  private final Intake mouth = new Intake();
   private final Arms Arms = new Arms();
   private final Shooter shooter = new Shooter();
+  private final Intake mouth = new Intake(shooter);
 
   // commands
   private final DefaultSwerve defaultSwerve = new DefaultSwerve(primaryJoy, swerveSub);
-  private final DefaultIntake intakeTransport = new DefaultIntake(mouth, secondaryController);
+  private final DefaultIntake intakeTransport = new DefaultIntake(mouth, secondaryController, shooter);
   private final DefaultClimb climbCommand = new DefaultClimb(primaryJoy, Arms);
   private final DefaultShooter shootCommand = new DefaultShooter(secondaryController, shooter, mouth);
 

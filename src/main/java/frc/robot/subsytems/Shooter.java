@@ -36,6 +36,11 @@ public class Shooter extends SubsystemBase {
             new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 2));
 
     // moter
+    public void makeItGoBackwards(){
+        shooterOne.set(TalonSRXControlMode.PercentOutput, -0.27);
+        shooterTwo.set(TalonSRXControlMode.PercentOutput, -0.27);
+    }
+
     public void shootAmp() {
 
         // deflectorEncoder.getAbsolutePosition().setUpdateFrequency(100, 250);
