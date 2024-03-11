@@ -223,5 +223,6 @@ public class SwerveSubsystem extends SubsystemBase {
                                 this // Reference to this subsystem to set requirements
                 );
                 Shuffleboard.getTab("Debug").addDouble("drive velocity", this::getDriveMotorVelocity);
+                Shuffleboard.getTab("Debug").addDouble("drive velocity unfiltered", () -> fLSwerve.driveMotor.getEncoder().getVelocity());
         }
 }

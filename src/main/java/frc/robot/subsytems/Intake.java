@@ -1,10 +1,13 @@
 package frc.robot.subsytems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import au.grapplerobotics.LaserCan;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
@@ -106,6 +109,7 @@ public class Intake extends SubsystemBase {
     }
 
     private PIDController notePID = new PIDController(.004, 0, 0);
+    MedianFilter laserFilter = new MedianFilter(5);
 
     @Override
     public void periodic() {
@@ -136,19 +140,23 @@ public class Intake extends SubsystemBase {
                     // return;
                 }
 
+                var out = -laserFilter.calculate(notePID.calculate(measurement.distance_mm, 207));
+                transport.set(TalonSRXControlMode.PercentOutput, MathUtil.clamp(out, -.5, .75));
                 shooterSub.makeItGoBackwards();
                 return;
 
             }
         } else if (isFeeding) {
-
             transport.set(ControlMode.PercentOutput, .7);
             intakeTwo.set(ControlMode.PercentOutput, 0.5);
+
         } else {
 
             intakeOne.set(ControlMode.PercentOutput, 0);
             intakeTwo.set(ControlMode.PercentOutput, 0);
             transport.set(ControlMode.PercentOutput, 0);
+
+            shooterSub.turnOff();
         }
     }
 }

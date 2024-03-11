@@ -1,9 +1,14 @@
 package frc.robot.command.autolime.autoSequences;
 
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.AutoIntake;
+import frc.robot.command.autolime.AutoIntakeEndless;
 import frc.robot.command.autolime.AutoShootSmart;
 import frc.robot.subsytems.Intake;
 import frc.robot.subsytems.Shooter;
@@ -25,9 +30,15 @@ public class CenterAuto extends SequentialCommandGroup {
         addCommands(
                 // new AutoShoot(shooterSub, intakeSub).until(intakeSub::doesntHaveNote).withTimeout(2), 
                 new AutoShootSmart(shooterSub, intakeSub),
-                new AutoDrive(swerveSub, 5, 0.2).withTimeout(0.01),
-                Commands.race(new AutoDrive(swerveSub, 3, 0.2), new AutoIntake(intakeSub)).until(intakeSub::hasNote),
+                Commands.race(
+                    new AutoDrive(swerveSub, 3, 0.2),
+                    new ParallelRaceGroup(
+                        new AutoIntake(intakeSub),
+                        new WaitUntilCommand(intakeSub::hasNote).andThen(new WaitCommand(.45))
+                    )
+                ),
                 new AutoDrive(swerveSub, 5, -0.2).until(swerveSub::hasHitSomething),
-                new AutoShootSmart(shooterSub, intakeSub));
+                new AutoShootSmart(shooterSub, intakeSub)
+        );
     }
 }

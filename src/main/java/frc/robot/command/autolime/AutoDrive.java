@@ -52,8 +52,6 @@ public class AutoDrive extends Command {
     @Override
     public boolean isFinished() {
 
-        // TODO tweak for going backwards?
-
         double dist = swerveSub.getPose().getTranslation().getDistance(startPosition);
         if (goalDistance < dist) {
             return true;

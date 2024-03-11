@@ -53,7 +53,6 @@ public class DefaultShooter extends Command {
             intakeSub.feedOff();
         }
 
-
         if(secondaryController.getXButton()) {
             intakeSub.feedBackwards();
             shooterSub.reverseShooters();

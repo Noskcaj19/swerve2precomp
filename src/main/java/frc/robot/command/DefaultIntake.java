@@ -16,6 +16,7 @@ public class DefaultIntake extends Command {
         addRequirements(mouth);
         this.secondaryController = secondaryController;
         this.mouth = mouth;
+        this.shooterSub = shooterSub;
     }
 
     // comment out which control method the drivers dont want

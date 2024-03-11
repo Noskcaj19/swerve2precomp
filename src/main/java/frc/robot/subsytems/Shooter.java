@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
 
     // moter
     public void makeItGoBackwards(){
-        shooterOne.set(TalonSRXControlMode.PercentOutput, -0.27);
+        shooterOne.set(TalonSRXControlMode.PercentOutput, 0.27);
         shooterTwo.set(TalonSRXControlMode.PercentOutput, -0.27);
     }
 
