@@ -41,7 +41,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         private static AHRS gyro = new AHRS(SPI.Port.kMXP);
 
-        private LinearFilter hitFilter = LinearFilter.movingAverage(25);
+        private LinearFilter hitFilter = LinearFilter.movingAverage(30);
 
         private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
                         frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);

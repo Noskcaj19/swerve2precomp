@@ -13,10 +13,15 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
+
+    public Shooter() {
+        Shuffleboard.getTab("debug").addDouble("MotorSpeed", this::getMotorSpeed);
+    }
 
     // motor
     // to be quite honest i dunnoi what goe s to which motor controller
@@ -24,7 +29,7 @@ public class Shooter extends SubsystemBase {
     private TalonSRX shooterTwo = new TalonSRX(11);
     // private final TalonSRX ampDeflector = new TalonSRX(0);
     // private final CANcoder deflectorEncoder = new CANcoder(0);
-    private double ampSet;
+    //private double ampSet;
 
     // shooterOne.setUpdateFrequency(200);
     // set the update frequency
