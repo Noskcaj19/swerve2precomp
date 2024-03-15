@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase {
 
         this.shooterSub = shooterSub;
 
-        intakeTwo.setInverted(true);
+        intakeTwo.setInverted(false);
     }
 
     // boolena
