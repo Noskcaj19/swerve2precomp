@@ -90,7 +90,9 @@ public class AutoAlignTags extends Command {
     public void execute() {
         if (LimelightHelpers.getTV("limelight-back")) {
             var id = LimelightHelpers.getFiducialID("limelight-back");
-            // if (!(id == 7 || id == 4)) { return; }
+            // if (DriverStation.isFMSAttached()){
+            //     if (!(id == 7 || id == 4)) { return; }
+            // }
             // backTagID = LimelightHelpers.getFiducialID("limelight-back");
                         // double xOff = -xPID.calculate(getZontal());
                         var rot = xPID.calculate(getSpace().getX());
