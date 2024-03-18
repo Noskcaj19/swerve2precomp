@@ -8,6 +8,7 @@ import au.grapplerobotics.LaserCan;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.MedianFilter;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
@@ -26,6 +27,7 @@ public class Intake extends SubsystemBase {
     // kind of like beatle jaws
     public Intake(Shooter shooterSub) {
 
+        Shuffleboard.getTab("Drive").addBoolean("hasNote", this::hasNote);
         this.shooterSub = shooterSub;
 
         intakeTwo.setInverted(false);
@@ -125,14 +127,12 @@ public class Intake extends SubsystemBase {
             // + (measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT));
             if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
                 if (measurement.distance_mm < 300) {
-                    System.out.println("1");
                     intakeOne.set(ControlMode.PercentOutput, .0);
                     intakeTwo.set(ControlMode.PercentOutput, .5);
                     // transport.set(ControlMode.PercentOutput, 0.0);
                     // return;
                 }
                 if (measurement.distance_mm < 250) {
-                    System.out.println("2");
 
                     intakeOne.set(ControlMode.PercentOutput, .0);
                     intakeTwo.set(ControlMode.PercentOutput, .25);

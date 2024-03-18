@@ -20,7 +20,9 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
 
     public Shooter() {
-        Shuffleboard.getTab("debug").addDouble("MotorSpeed", this::getMotorSpeed);
+        Shuffleboard.getTab("debug").addDouble("MotorSpeed", this::getSpeedOne);
+        // shooterOne.configVoltageCompSaturation(12);
+        // shooterTwo.configVoltageCompSaturation(12);
     }
 
     // motor
@@ -30,7 +32,6 @@ public class Shooter extends SubsystemBase {
     // private final TalonSRX ampDeflector = new TalonSRX(0);
     // private final CANcoder deflectorEncoder = new CANcoder(0);
     //private double ampSet;
-
     // shooterOne.setUpdateFrequency(200);
     // set the update frequency
 
@@ -58,8 +59,8 @@ public class Shooter extends SubsystemBase {
         // ampDeflector.set(TalonSRXControlMode.PercentOutput,
         // deflectorPID.calculate(ampEncoder));
         // ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
-        shooterOne.set(TalonSRXControlMode.PercentOutput, -.65);
-        shooterTwo.set(TalonSRXControlMode.PercentOutput, .65);
+        shooterOne.set(TalonSRXControlMode.PercentOutput, -.5);
+        shooterTwo.set(TalonSRXControlMode.PercentOutput, .5);
         // whatever
     }
 
@@ -73,8 +74,8 @@ public class Shooter extends SubsystemBase {
         // ampDeflector.set(TalonSRXControlMode.PercentOutput,
         // deflectorPID.calculate(ampEncoder));
         // ampDeflector.set(TalonSRXControlMode.PercentOutput, ampSet);
-        shooterOne.set(TalonSRXControlMode.PercentOutput, -.8);
-        shooterTwo.set(TalonSRXControlMode.PercentOutput, .8);
+        shooterOne.set(TalonSRXControlMode.PercentOutput, -.9);
+        shooterTwo.set(TalonSRXControlMode.PercentOutput, .9);
     }
 
     public void reverseShooters() {
@@ -83,7 +84,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isToAmpSpeed() {
-        if (shooterOne.getSelectedSensorVelocity() > 2000 && shooterTwo.getSelectedSensorVelocity() > 2000) {
+        if (shooterOne.getSelectedSensorVelocity() > 1500 && shooterTwo.getSelectedSensorVelocity() > 1500) {
             return true;
         } else {
             return false;
@@ -105,10 +106,10 @@ public class Shooter extends SubsystemBase {
 
     }
 
-    public double getMotorSpeed() {
-        return shooterOne.getActiveTrajectoryVelocity();
-        // return motor speed
-    }
+    // public double getMotorSpeed() {
+    //     return shooterOne.();
+    //     // return motor speed
+    // }
 
     public double getRotations() {
         // return rotations of the shooter wheel to use in auto
