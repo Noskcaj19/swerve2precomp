@@ -41,21 +41,26 @@ static int count = 0;
     
     @Override
     public void initialize() {
+        time = 0;
         // forwardPid.reset(1.5);
         // horizontalPid.reset(0);
         
     }
 SlewRateLimiter turnLimit = new SlewRateLimiter(1);
 
+    int time = 0;
     @Override
     public void execute() {
         if (LimelightHelpers.getTV("limelight-front")) {
+            time += 1;
             var rot = rotationPid.calculate(getHorizontalOffset());
             rot = MathUtil.clamp(rot, -DriveConstants.MaxVelocityMetersPerSecond/5, DriveConstants.MaxVelocityMetersPerSecond/5);
 
             swerveSub.drive(0, 0, turnLimit.calculate(rot/DriveConstants.MaxAngularVelocityRadiansPerSecond), false);
         }else {
-            swerveSub.drive(0, 0, -0.08, false);
+            if ( time < 10) {
+                swerveSub.drive(0, 0, -0.08, false);
+            }
         }
     }
 

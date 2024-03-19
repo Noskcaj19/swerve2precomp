@@ -55,8 +55,8 @@ public class ThreeNoteCenterAuto extends SequentialCommandGroup{
                 new StopCommand(swerveSub),
                 new AutoShootSmart(shooterSub, intakeSub).withTimeout(4),
                 // end 2nd note
-                new AutoRotate(swerveSub, -25, 0.1),
-                new NoteRotationAlign(swerveSub).withTimeout(1),
+                new AutoRotate(swerveSub, -10, 0.08),
+                new NoteRotationAlign(swerveSub).withTimeout(2),
                 Commands.race(
                     new AutoDrive(swerveSub, 2.5, 0.2),
                     Commands.race(
