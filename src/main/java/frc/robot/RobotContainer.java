@@ -20,6 +20,7 @@ import frc.robot.command.DefaultSwerve;
 import frc.robot.command.HomeClimb;
 import frc.robot.command.autolime.AutoAlignNotes;
 import frc.robot.command.autolime.AutoAlignTags;
+import frc.robot.command.autolime.AutoAlignTagsDrive;
 import frc.robot.command.autolime.AutoDrive;
 import frc.robot.command.autolime.NoteRotationAlign;
 import frc.robot.command.autolime.autoSequences.CenterAuto;
@@ -88,7 +89,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new JoystickButton(primaryJoy, 3).whileTrue(new AutoAlignTags(swerveSub));
+    new JoystickButton(primaryJoy, 3).whileTrue(new AutoAlignTagsDrive(swerveSub, primaryJoy));
     // new JoystickButton(primaryJoy, 8).whileTrue(new PathPlannerAuto("New New
     // new JoystickButton(primaryJoy, 11).whileTrue(new PathPlannerAuto("RIGHTAUTO"));
     new JoystickButton(primaryJoy, 10).whileTrue(new NoteRotationAlign(swerveSub));
