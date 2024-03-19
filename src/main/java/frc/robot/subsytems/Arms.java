@@ -1,5 +1,7 @@
 package frc.robot.subsytems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
@@ -18,7 +20,7 @@ public class Arms extends SubsystemBase {
 
     // private
     public Arms() {
-        arm2.follow(arm1);
+        // arm2.follow(arm1);
     }
 
     public void setArmLimitSetpoint(double setpoint) {
@@ -35,14 +37,30 @@ public class Arms extends SubsystemBase {
 
     public void armsUp() {
         arm1.set(TalonSRXControlMode.PercentOutput, 0.8);
+        arm2.set(TalonSRXControlMode.PercentOutput, 0.8);
     }
 
     public void armsDown() {
         arm1.set(TalonSRXControlMode.PercentOutput, -0.99);
+        arm2.set(TalonSRXControlMode.PercentOutput, -0.99);
     }
 
     public void turnOff() {
         arm1.set(TalonSRXControlMode.PercentOutput, 0);
+        arm2.set(TalonSRXControlMode.PercentOutput, 0);
+    }
+
+    public void overrideLeft(double percent) {
+        arm1.set(ControlMode.PercentOutput, percent);
+    }
+    public void overrideRight(double percent) {
+        arm2.set(ControlMode.PercentOutput, percent);
+    }
+    public double getLeftCurrent() {
+        return arm1.getStatorCurrent();
+    }
+    public double getRightCurrent() {
+        return arm2.getStatorCurrent();
     }
 
     @Override

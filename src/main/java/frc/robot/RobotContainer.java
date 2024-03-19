@@ -17,6 +17,7 @@ import frc.robot.command.DefaultClimb;
 import frc.robot.command.DefaultIntake;
 import frc.robot.command.DefaultShooter;
 import frc.robot.command.DefaultSwerve;
+import frc.robot.command.HomeClimb;
 import frc.robot.command.autolime.AutoAlignNotes;
 import frc.robot.command.autolime.AutoAlignTags;
 import frc.robot.command.autolime.AutoDrive;
@@ -63,6 +64,9 @@ public class RobotContainer {
     shooter.setDefaultCommand(shootCommand);
     mouth.setDefaultCommand(intakeTransport);
     Arms.setDefaultCommand(climbCommand);
+    // Shuffleboard.getTab("Debug").addDouble("LeftCurrent", () -> Arms.getLeftCurrent());
+    // Shuffleboard.getTab("Debug").addDouble("RightCurrent", () -> Arms.getRightCurrent());
+    Shuffleboard.getTab("Tune").add("HomeClimb", new HomeClimb(Arms));
     configureBindings();
 
     autoChooser.addOption("right", new RightAuto(swerveSub, shooter, mouth));
