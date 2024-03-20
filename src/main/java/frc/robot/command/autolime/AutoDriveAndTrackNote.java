@@ -1,19 +1,11 @@
 package frc.robot.command.autolime;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsytems.SwerveSubsystem;
-import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.subsytems.SwerveModule;
+import frc.robot.NoteTrackingPIDSupplier;
 
 public class AutoDriveAndTrackNote extends Command {
 
@@ -22,13 +14,7 @@ public class AutoDriveAndTrackNote extends Command {
     private double speed;
     private Translation2d startPosition;
     SlewRateLimiter slew = new SlewRateLimiter(0.2);
-
-    MedianFilter horizontalFilter = new MedianFilter(3);
-    private ProfiledPIDController rotationPid;
-    private int time;
-    final double getHorizontalOffset() {
-        return horizontalFilter.calculate(LimelightHelpers.getTX("limelight-front"));
-    }
+    private NoteTrackingPIDSupplier notePidAlignmentSupplier = new NoteTrackingPIDSupplier();
 
     public AutoDriveAndTrackNote(SwerveSubsystem swerveSub, double goalDistance, double speed) {
 
@@ -37,9 +23,6 @@ public class AutoDriveAndTrackNote extends Command {
         this.goalDistance = goalDistance;
         this.speed = speed;
         // this.slew = slew;
-        rotationPid = new ProfiledPIDController(0.03, 0, 0,
-        // horizontalPid = new ProfiledPIDController(kuh*.6, 0, tuh*.125,
-        new TrapezoidProfile.Constraints(Constants.DriveConstants.MaxVelocityMetersPerSecond / 3, 3/1.5));
 
     }
 
@@ -48,25 +31,16 @@ public class AutoDriveAndTrackNote extends Command {
         startPosition = swerveSub.getPose().getTranslation();
         slew.reset(0);
         swerveSub.uh = false;
-        time = 0;
     }
 
-SlewRateLimiter turnLimit = new SlewRateLimiter(1);
     @Override
     public void execute() {
         // drive forqard
-        var autoRotPercent = 0.0;
-        if (LimelightHelpers.getTV("limelight-front")) {
-            autoRotPercent = rotationPid.calculate(getHorizontalOffset());
-            autoRotPercent = MathUtil.clamp(autoRotPercent, -DriveConstants.MaxVelocityMetersPerSecond/5, DriveConstants.MaxVelocityMetersPerSecond/5);
-
-            autoRotPercent= turnLimit.calculate(autoRotPercent/DriveConstants.MaxAngularVelocityRadiansPerSecond);
-        }
 
         NetworkTableInstance.getDefault().getEntry("/Shuffleboard/Tune/Commanded Speed").setDouble(speed);
         var ss=slew.calculate(speed);
         NetworkTableInstance.getDefault().getEntry("/Shuffleboard/Tune/Limited Speed").setDouble(ss);
-        swerveSub.drive(ss, 0, autoRotPercent, false);
+        swerveSub.drive(ss, 0, notePidAlignmentSupplier.calculate(), false);
         // hird
 
     }
