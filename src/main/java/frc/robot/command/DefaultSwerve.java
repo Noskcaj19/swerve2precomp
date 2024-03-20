@@ -4,12 +4,14 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.NoteTrackingPIDSupplier;
 import frc.robot.subsytems.*;
 
 public class DefaultSwerve extends Command {
 
     private Joystick joy;
     private SwerveSubsystem swerveSub;
+    private NoteTrackingPIDSupplier noteAlignmentSupplier = new NoteTrackingPIDSupplier();
     Boolean slow = false;
 
     public DefaultSwerve(Joystick joy, SwerveSubsystem swerveSub) {
@@ -52,6 +54,10 @@ public class DefaultSwerve extends Command {
 
         if (joy.getRawButton(12)) {
             SwerveSubsystem.zeroYaw();
+        }
+
+        if (joy.getRawButton(4)) {
+            rot += noteAlignmentSupplier.calculate();
         }
 
         swerveSub.drive(xSpeed, ySpeed, rot, !joy.getRawButton(2));
